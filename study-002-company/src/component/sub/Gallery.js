@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function Gallery(props) {
-  return (
-      <>
-
-      </>
-  );
+  return <div>Gallery</div>;
 }
 
 export default Gallery;

@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function Vids(props) {
-  return (
-      <>
-        
-      </>
-  );
+  return <div>Vids</div>;
 }
 
 export default Vids;

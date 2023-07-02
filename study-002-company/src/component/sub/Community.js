@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function Community(props) {
-  return (
-      <>
-
-      </>
-  );
+  return <div>Community</div>;
 }
 
 export default Community;

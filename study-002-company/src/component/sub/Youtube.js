@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function Youtube(props) {
-  return (
-      <>
-
-      </>
-  );
+  return <div>Youtube</div>;
 }
 
 export default Youtube;

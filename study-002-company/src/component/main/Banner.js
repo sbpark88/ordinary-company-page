@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function Banner(props) {
-  return (
-      <>
-        
-      </>
-  );
+  return <div>Banner</div>;
 }
 
 export default Banner;

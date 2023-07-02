@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function Visual(props) {
-  return (
-      <>
-        
-      </>
-  );
+  return <div>Visual</div>;
 }
 
 export default Visual;

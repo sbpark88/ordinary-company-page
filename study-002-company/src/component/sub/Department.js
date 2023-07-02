@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function Department(props) {
-  return (
-      <>
-
-      </>
-  );
+  return <div>Depart</div>;
 }
 
 export default Department;

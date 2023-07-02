@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function Pics(props) {
-  return (
-      <>
-        
-      </>
-  );
+  return <div>Pics</div>;
 }
 
 export default Pics;

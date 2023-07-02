@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function Members(props) {
-  return (
-      <>
-
-      </>
-  );
+  return <div>Member</div>;
 }
 
 export default Members;

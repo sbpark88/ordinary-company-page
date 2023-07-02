@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function Btns(props) {
-  return (
-      <>
-        
-      </>
-  );
+  return <div>Btns</div>;
 }
 
 export default Btns;
