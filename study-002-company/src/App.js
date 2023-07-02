@@ -15,25 +15,37 @@ import Department from "./component/sub/Department";
 import Gallery from "./component/sub/Gallery";
 import Members from "./component/sub/Members";
 import Youtube from "./component/sub/Youtube";
+import { Route } from "react-router-dom";
 
 function App() {
+  const rootUrl = "/";
+  const viewUrl = {
+    community: "/community",
+    contact: "/contact",
+    department: "/department",
+    gallery: "/gallery",
+    members: "/members",
+    youtube: "/youtube",
+  };
   return (
     <>
       <Header />
 
-      <Banner />
-      <Btns />
-      <News />
-      <Pics />
-      <Vids />
-      <Visual />
+      <Route exact path={rootUrl}>
+        <Banner />
+        <Btns />
+        <News />
+        <Pics />
+        <Vids />
+        <Visual />
+      </Route>
 
-      <Community />
-      <Contact />
-      <Department />
-      <Gallery />
-      <Members />
-      <Youtube />
+      <Route path={viewUrl?.community} component={Community} />
+      <Route path={viewUrl?.contact} component={Contact} />
+      <Route path={viewUrl?.department} component={Department} />
+      <Route path={viewUrl?.gallery} component={Gallery} />
+      <Route path={viewUrl?.members} component={Members} />
+      <Route path={viewUrl?.youtube} component={Youtube} />
 
       <Footer />
     </>
