@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/layout/Layout";
 import axios from "axios";
+import Constants from "../modules/data/Constants";
 
 function Department(props) {
   const [members, setMembers] = useState([]);
@@ -40,7 +41,11 @@ function MemberProfile({ member, index }) {
     <article>
       <div className="pic">
         <img
-          src={`${process.env.PUBLIC_URL}/img/${member.pic}`}
+          src={`${Constants.PUBLIC_URL}/img/${member.pic}`}
+          alt={member.name}
+        />
+        <img
+          src={`${Constants.PUBLIC_URL}/img/${member.pic}`}
           alt={member.name}
         />
       </div>
