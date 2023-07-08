@@ -1,6 +1,6 @@
-# React-Weekend-Study
+# Project
 
-React 주말 스터디
+일반적인 기업 홈페이지 예시 제작
 
 # System Configurations
 
