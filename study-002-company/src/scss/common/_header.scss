@@ -22,6 +22,12 @@ header {
       font: 15px/1 'arial';
       color: #777;
     }
+
+    .fa-bars {
+      color: #333;
+      font-size: 20px;
+      display: none;
+    }
   }
 
   &.main {
@@ -37,6 +43,17 @@ header {
 
     #gnb li a {
       color: #fff;
+    }
+  }
+}
+
+@media screen and (max-width: $tablet){
+  header {
+    #gnb {
+      display: none;
+    }
+    .fa-bars {
+      display: block;
     }
   }
 }

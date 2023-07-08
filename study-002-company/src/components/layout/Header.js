@@ -1,13 +1,10 @@
 import React from "react";
 import { viewUrl } from "../../modules/data/URL";
 import { Link, NavLink } from "react-router-dom";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Header({ type }) {
-  const navActiveStyle = {
-    color: "hotpink",
-    fontWeight: "bold",
-  };
-
   return (
     <header className={type}>
       <h1>
@@ -21,6 +18,7 @@ function Header({ type }) {
         <Navigation path={viewUrl?.contact} name={"Contact"} />
         <Navigation path={viewUrl?.members} name={"Members"} />
       </ul>
+      <FontAwesomeIcon icon={faBars} />
     </header>
   );
 }
