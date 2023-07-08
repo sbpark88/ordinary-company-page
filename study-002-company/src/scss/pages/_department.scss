@@ -46,3 +46,29 @@
     }
   }
 }
+
+@media screen and (max-width: $tablet) {
+  .department {
+    > .inner {
+      article {
+        width: 45%;
+        .pic {
+          height: 37vw;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $mobile) {
+  .department {
+    > .inner {
+      article {
+        width: 100%;
+        .pic {
+          height: 78vw;
+        }
+      }
+    }
+  }
+}
