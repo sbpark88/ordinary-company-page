@@ -2,18 +2,14 @@ import React from "react";
 import { viewUrl } from "../../modules/data/URL";
 import { Link, NavLink } from "react-router-dom";
 
-function Header(props) {
-  const headerStyle = {
-    backgroundColor: "aqua",
-  };
-
+function Header({ type }) {
   const navActiveStyle = {
     color: "hotpink",
     fontWeight: "bold",
   };
 
   return (
-    <header style={headerStyle}>
+    <header className={type}>
       <h1>
         <Link to={viewUrl.root}>LOGO</Link>
       </h1>

@@ -15,22 +15,28 @@ import Department from "./pages/Department";
 import Gallery from "./pages/Gallery";
 import Members from "./pages/Members";
 import Youtube from "./pages/Youtube";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { viewUrl } from "./modules/data/URL";
 
 function App() {
   return (
     <>
-      <Header />
+      {/* Switch 내부에 중복되는 라우트에 대한 switch 처리를 자동으로 해준다 */}
+      <Switch>
+        <Route exact path={viewUrl?.root}>
+          <Header type={"main"} />
+          <Visual />
+          <News />
+          <Pics />
+          <Vids />
+          <Banner />
+          <Btns />
+        </Route>
 
-      <Route exact path={viewUrl?.root}>
-        <Banner />
-        <Btns />
-        <News />
-        <Pics />
-        <Vids />
-        <Visual />
-      </Route>
+        <Route path={viewUrl?.root}>
+          <Header type={"sub"} />
+        </Route>
+      </Switch>
 
       <Route path={viewUrl?.department} component={Department} />
       <Route path={viewUrl?.community} component={Community} />
