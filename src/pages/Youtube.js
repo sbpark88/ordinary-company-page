@@ -75,12 +75,7 @@ function VideoCard(props) {
         <p>{description}</p>
         <span>{publishedAt}</span>
       </div>
-      <div
-        className="pic"
-        onClick={() => {
-          console.log(modal);
-        }}
-      >
+      <div className="pic" onClick={() => modal.current.openModal()}>
         <img src={url} alt={title} />
       </div>
     </article>
