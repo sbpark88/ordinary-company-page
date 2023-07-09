@@ -13,6 +13,7 @@ const options = {
   playlistId: "PLRROPbx6xj0Gsti_vFYy_p-NUuXDMPCT7",
   maxResults: 10,
 };
+
 function Youtube(props) {
   const [vids, setVids] = useState([]);
   const modal = useRef(null);
@@ -36,18 +37,22 @@ function Youtube(props) {
       <Layout name={"Youtube"}>
         {vids.map((vid) => {
           const props = {
-            id: vid.id,
-            url: vid.snippet.thumbnails.standard.url,
-            title: dropLongString(vid.snippet.title, 50),
-            description: dropLongString(vid.snippet.description, 200),
-            publishedAt: dateFormatWithDot(vid.snippet.publishedAt),
+            url: vid?.snippet.thumbnails.standard.url,
+            title: dropLongString(vid?.snippet.title, 50),
+            description: dropLongString(vid?.snippet.description, 200),
+            publishedAt: dateFormatWithDot(vid?.snippet.publishedAt),
             modal: modal,
           };
 
-          return <VideoCard {...props} />;
+          return <VideoCard key={vid?.id} {...props} />;
         })}
       </Layout>
-      <Modal ref={modal} />
+      <Modal ref={modal}>
+        <iframe
+          title={vids[0]?.snippet.title}
+          src={`https://www.youtube.com/embed/${vids[0]?.snippet.resourceId.videoId}`}
+        ></iframe>
+      </Modal>
     </>
   );
 }
@@ -56,11 +61,11 @@ function Youtube(props) {
 function dateFormatWithDot(str) {
   return str.split("T")[0].replaceAll("-", ".");
 }
+
 function VideoCard(props) {
-  const { id, url, title, description, publishedAt, modal } = props;
+  const { url, title, description, publishedAt, modal } = props;
 
   if (
-    id === undefined ||
     url === undefined ||
     title === undefined ||
     description === undefined ||
@@ -69,7 +74,7 @@ function VideoCard(props) {
     return null;
 
   return (
-    <article key={id}>
+    <article>
       <h2>{title}</h2>
       <div className="txt">
         <p>{description}</p>

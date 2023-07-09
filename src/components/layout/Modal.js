@@ -1,6 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react";
 
-const Modal = forwardRef((props, ref) => {
+const Modal = forwardRef(({ children }, ref) => {
   const [open, setOpen] = useState(false);
 
   const openModal = () => setOpen(true);
@@ -16,7 +16,7 @@ const Modal = forwardRef((props, ref) => {
     <>
       {open && (
         <aside className="modal" ref={ref}>
-          <div className="con"></div>
+          <div className="con">{children}</div>
           <span className="close" onClick={closeModal}>
             close
           </span>
