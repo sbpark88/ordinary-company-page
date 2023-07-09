@@ -35,7 +35,7 @@ function Department(props) {
 }
 
 function MemberProfile({ member, index }) {
-  if (member == undefined) return null;
+  if (member === undefined) return null;
 
   return (
     <article>
