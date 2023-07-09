@@ -1,7 +1,12 @@
 import React from "react";
 
 function Modal(props) {
-  return <div>Modal</div>;
+  return (
+    <aside className="modal">
+      <div className="con"></div>
+      <span className="close">close</span>
+    </aside>
+  );
 }
 
 export default Modal;

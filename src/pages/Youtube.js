@@ -3,6 +3,7 @@ import Layout from "../components/layout/Layout";
 import axios from "axios";
 import { objToUrlParams, openApi } from "../modules/data/URL";
 import { dropLongString } from "../modules/utils/StringUtils";
+import Modal from "../components/layout/Modal";
 
 const apiKey = (await import("../apiKey")).youtubeApiV3;
 
@@ -30,28 +31,31 @@ function Youtube(props) {
   }, []);
 
   return (
-    <Layout name={"Youtube"}>
-      {vids.map((vid) => {
-        const children = {
-          id: vid.id,
-          url: vid.snippet.thumbnails.standard.url,
-          title: dropLongString(vid.snippet.title, 50),
-          description: dropLongString(vid.snippet.description, 200),
-          publishedAt: dateFormatWithDot(vid.snippet.publishedAt),
-        };
+    <>
+      <Layout name={"Youtube"}>
+        {vids.map((vid) => {
+          const children = {
+            id: vid.id,
+            url: vid.snippet.thumbnails.standard.url,
+            title: dropLongString(vid.snippet.title, 50),
+            description: dropLongString(vid.snippet.description, 200),
+            publishedAt: dateFormatWithDot(vid.snippet.publishedAt),
+          };
 
-        return (
-          <VideoCard
-            key={children.id}
-            id={children.id}
-            url={children.url}
-            title={children.title}
-            description={children.description}
-            publishedAt={children.publishedAt}
-          />
-        );
-      })}
-    </Layout>
+          return (
+            <VideoCard
+              key={children.id}
+              id={children.id}
+              url={children.url}
+              title={children.title}
+              description={children.description}
+              publishedAt={children.publishedAt}
+            />
+          );
+        })}
+      </Layout>
+      <Modal />
+    </>
   );
 }
 
