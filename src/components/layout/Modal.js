@@ -1,4 +1,10 @@
-import React, { forwardRef, useImperativeHandle, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
+import { preventWindowScroll } from "../../modules/utils/UiHelper";
 
 const Modal = forwardRef(({ children }, ref) => {
   const [open, setOpen] = useState(false);
@@ -11,6 +17,11 @@ const Modal = forwardRef(({ children }, ref) => {
   };
 
   useImperativeHandle(ref, () => raiseUp);
+
+  // prevent scroll when modal is opened
+  const preventBackgroundScroll = preventWindowScroll(open);
+
+  useEffect(preventBackgroundScroll, [open]);
 
   return (
     <>
