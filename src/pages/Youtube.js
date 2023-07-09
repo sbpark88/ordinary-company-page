@@ -71,10 +71,14 @@ function VideoCard({ id, url, title, description, publishedAt }) {
 
   return (
     <article key={id}>
-      <img src={url} alt={title} />
       <h2>{title}</h2>
-      <p>{description}</p>
-      <span>{publishedAt}</span>
+      <div className="txt">
+        <p>{description}</p>
+        <span>{publishedAt}</span>
+      </div>
+      <div className="pic">
+        <img src={url} alt={title} />
+      </div>
     </article>
   );
 }
