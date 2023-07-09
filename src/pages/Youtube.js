@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Layout from "../components/layout/Layout";
 import axios from "axios";
 import { objToUrlParams, openApi } from "../modules/data/URL";
@@ -15,6 +15,7 @@ const options = {
 };
 function Youtube(props) {
   const [vids, setVids] = useState([]);
+  const modal = useRef(null);
   const getYoutubeList = async () => {
     const url = `${openApi.youtubePlaylist}?${objToUrlParams(options)}`;
 
@@ -34,27 +35,19 @@ function Youtube(props) {
     <>
       <Layout name={"Youtube"}>
         {vids.map((vid) => {
-          const children = {
+          const props = {
             id: vid.id,
             url: vid.snippet.thumbnails.standard.url,
             title: dropLongString(vid.snippet.title, 50),
             description: dropLongString(vid.snippet.description, 200),
             publishedAt: dateFormatWithDot(vid.snippet.publishedAt),
+            modal: modal,
           };
 
-          return (
-            <VideoCard
-              key={children.id}
-              id={children.id}
-              url={children.url}
-              title={children.title}
-              description={children.description}
-              publishedAt={children.publishedAt}
-            />
-          );
+          return <VideoCard {...props} />;
         })}
       </Layout>
-      <Modal />
+      <Modal ref={modal} />
     </>
   );
 }
@@ -63,7 +56,9 @@ function Youtube(props) {
 function dateFormatWithDot(str) {
   return str.split("T")[0].replaceAll("-", ".");
 }
-function VideoCard({ id, url, title, description, publishedAt }) {
+function VideoCard(props) {
+  const { id, url, title, description, publishedAt, modal } = props;
+
   if (
     id === undefined ||
     url === undefined ||
@@ -80,7 +75,12 @@ function VideoCard({ id, url, title, description, publishedAt }) {
         <p>{description}</p>
         <span>{publishedAt}</span>
       </div>
-      <div className="pic">
+      <div
+        className="pic"
+        onClick={() => {
+          console.log(modal);
+        }}
+      >
         <img src={url} alt={title} />
       </div>
     </article>

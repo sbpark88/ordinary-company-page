@@ -1,12 +1,12 @@
-import React from "react";
+import React, { forwardRef } from "react";
 
-function Modal(props) {
+const Modal = forwardRef((props, ref) => {
   return (
-    <aside className="modal">
+    <aside className="modal" ref={ref}>
       <div className="con"></div>
       <span className="close">close</span>
     </aside>
   );
-}
+});
 
 export default Modal;
