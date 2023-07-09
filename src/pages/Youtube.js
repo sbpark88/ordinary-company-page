@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Layout from "../components/layout/Layout";
 import axios from "axios";
 import { objToUrlParams, openApi } from "../modules/data/URL";
+import { dropLongString } from "../modules/utils/StringUtils";
 
 const apiKey = (await import("../apiKey")).youtubeApiV3;
 
@@ -34,9 +35,9 @@ function Youtube(props) {
         const children = {
           id: vid.id,
           url: vid.snippet.thumbnails.standard.url,
-          title: vid.snippet.title,
-          description: vid.snippet.description,
-          publishedAt: vid.snippet.publishedAt,
+          title: dropLongString(vid.snippet.title, 50),
+          description: dropLongString(vid.snippet.description, 200),
+          publishedAt: dateFormatWithDot(vid.snippet.publishedAt),
         };
 
         return (
@@ -54,6 +55,10 @@ function Youtube(props) {
   );
 }
 
+// 2023-07-09T00:22:29Z 형식을 받아 2023.07.09 로 반환
+function dateFormatWithDot(str) {
+  return str.split("T")[0].replaceAll("-", ".");
+}
 function VideoCard({ id, url, title, description, publishedAt }) {
   if (
     id === undefined ||
