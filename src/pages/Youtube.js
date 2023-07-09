@@ -36,31 +36,37 @@ function Youtube(props) {
   return (
     <>
       <Layout name={"Youtube"}>
-        {vids.map((vid) => {
-          const props = {
-            id: vid?.id,
-            url: vid?.snippet.thumbnails.standard.url,
-            title: dropLongString(vid?.snippet.title, 50),
-            description: dropLongString(vid?.snippet.description, 200),
-            publishedAt: dateFormatWithDot(vid?.snippet.publishedAt),
-            modal: modal,
-            setSelectedId: setSelectedId,
-          };
-
-          return <VideoCard key={vid?.id} {...props} />;
-        })}
+        {vids.map((vid) => (
+          <VideoCard
+            key={vid?.id}
+            {...generateProps(vid, modal, setSelectedId)}
+          />
+        ))}
       </Layout>
       <Modal ref={modal}>{selectedId && youtubeIframe(vids, selectedId)}</Modal>
     </>
   );
 }
 
-// 2023-07-09T00:22:29Z 형식을 받아 2023.07.09 로 반환
-function dateFormatWithDot(str) {
-  return str.split("T")[0].replaceAll("-", ".");
-}
+// Generate props for Layout
+const generateProps = (vid, modal, setSelectedId) => {
+  return {
+    id: vid?.id,
+    url: vid?.snippet.thumbnails.standard.url,
+    title: dropLongString(vid?.snippet.title, 50),
+    description: dropLongString(vid?.snippet.description, 200),
+    publishedAt: dateFormatWithDot(vid?.snippet.publishedAt),
+    modal: modal,
+    setSelectedId: setSelectedId,
+  };
+};
 
-function youtubeIframe(vids, selectedId) {
+// 2023-07-09T00:22:29Z 형식을 받아 2023.07.09 로 반환
+const dateFormatWithDot = (str) => {
+  return str.split("T")[0].replaceAll("-", ".");
+};
+
+const youtubeIframe = (vids, selectedId) => {
   if (vids === undefined || selectedId === undefined) return null;
 
   const match = vids.filter((vid) => vid?.id === selectedId)[0];
@@ -75,7 +81,7 @@ function youtubeIframe(vids, selectedId) {
       src={`https://www.youtube.com/embed/${videoId}`}
     ></iframe>
   );
-}
+};
 
 function VideoCard(props) {
   const { id, url, title, description, publishedAt, modal, setSelectedId } =
@@ -103,7 +109,6 @@ function VideoCard(props) {
         onClick={() => {
           modal.current.openModal();
           setSelectedId(id);
-          console.log(id);
         }}
       >
         <img src={url} alt={title} />
