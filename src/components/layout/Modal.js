@@ -26,4 +26,6 @@ const Modal = forwardRef(({ children }, ref) => {
   );
 });
 
+Modal.displayName = "Modal";
+
 export default Modal;

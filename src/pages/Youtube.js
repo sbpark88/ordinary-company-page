@@ -16,6 +16,7 @@ const options = {
 
 function Youtube(props) {
   const [vids, setVids] = useState([]);
+  const [selectedId, setSelectedId] = useState("");
   const modal = useRef(null);
   const getYoutubeList = async () => {
     const url = `${openApi.youtubePlaylist}?${objToUrlParams(options)}`;
@@ -37,22 +38,19 @@ function Youtube(props) {
       <Layout name={"Youtube"}>
         {vids.map((vid) => {
           const props = {
+            id: vid?.id,
             url: vid?.snippet.thumbnails.standard.url,
             title: dropLongString(vid?.snippet.title, 50),
             description: dropLongString(vid?.snippet.description, 200),
             publishedAt: dateFormatWithDot(vid?.snippet.publishedAt),
             modal: modal,
+            setSelectedId: setSelectedId,
           };
 
           return <VideoCard key={vid?.id} {...props} />;
         })}
       </Layout>
-      <Modal ref={modal}>
-        <iframe
-          title={vids[0]?.snippet.title}
-          src={`https://www.youtube.com/embed/${vids[0]?.snippet.resourceId.videoId}`}
-        ></iframe>
-      </Modal>
+      <Modal ref={modal}>{selectedId && youtubeIframe(vids, selectedId)}</Modal>
     </>
   );
 }
@@ -62,14 +60,34 @@ function dateFormatWithDot(str) {
   return str.split("T")[0].replaceAll("-", ".");
 }
 
+function youtubeIframe(vids, selectedId) {
+  if (vids === undefined || selectedId === undefined) return null;
+
+  const match = vids.filter((vid) => vid?.id === selectedId)[0];
+  if (match === null || match === undefined) return null;
+
+  const title = match.snippet.title;
+  const videoId = match.snippet.resourceId.videoId;
+
+  return (
+    <iframe
+      title={title}
+      src={`https://www.youtube.com/embed/${videoId}`}
+    ></iframe>
+  );
+}
+
 function VideoCard(props) {
-  const { url, title, description, publishedAt, modal } = props;
+  const { id, url, title, description, publishedAt, modal, setSelectedId } =
+    props;
 
   if (
+    id === undefined ||
     url === undefined ||
     title === undefined ||
     description === undefined ||
-    publishedAt === undefined
+    publishedAt === undefined ||
+    modal === undefined
   )
     return null;
 
@@ -80,7 +98,14 @@ function VideoCard(props) {
         <p>{description}</p>
         <span>{publishedAt}</span>
       </div>
-      <div className="pic" onClick={() => modal.current.openModal()}>
+      <div
+        className="pic"
+        onClick={() => {
+          modal.current.openModal();
+          setSelectedId(id);
+          console.log(id);
+        }}
+      >
         <img src={url} alt={title} />
       </div>
     </article>
