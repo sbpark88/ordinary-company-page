@@ -1,7 +1,11 @@
 import React from "react";
 
 function Pics(props) {
-  return <div>Pics</div>;
+  return (
+    <section id="pics">
+      <h1>Pics</h1>
+    </section>
+  );
 }
 
 export default Pics;

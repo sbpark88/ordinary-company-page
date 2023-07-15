@@ -1,7 +1,15 @@
 import React from "react";
 
 function Btns(props) {
-  return <div>Btns</div>;
+  return (
+    <ul id="scroll_navi">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  );
 }
 
 export default Btns;
