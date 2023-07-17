@@ -4,19 +4,23 @@
   right: 50px;
   transform: translateY(-50%);
   display: flex;
+  align-items: center;
   gap: 50px;
   flex-direction: column;
 
   li {
     width: 10px;
     height: 10px;
+    border-radius: 50%;
     background-color: #fff;
     cursor: pointer;
-    transition-delay: .5s;
+    transition: .5s;
 
     &.on {
+      width: 16px;
       height: 100px;
-      background-color: #333;
+      border-radius: 10px;
+      background-color: #777;
     }
   }
 }
