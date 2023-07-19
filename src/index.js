@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { HashRouter } from "react-router-dom";
+import { DevSupport } from "@react-buddy/ide-toolbox";
+import { ComponentPreviews, useInitial } from "./dev";
 
 /*
  * HashRouter 는 깃허브 용
@@ -9,7 +11,12 @@ import { HashRouter } from "react-router-dom";
  * */
 ReactDOM.render(
   <HashRouter>
-    <App />
+    <DevSupport
+      ComponentPreviews={ComponentPreviews}
+      useInitialHook={useInitial}
+    >
+      <App />
+    </DevSupport>
   </HashRouter>,
   document.getElementById("root")
 );
