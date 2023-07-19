@@ -9,6 +9,7 @@ function Btns(props) {
       `.${btnScrollTargetClass}`
     );
     setPages([...nodes]);
+    nodes.forEach((page) => observer.observe(page));
   };
 
   const scrollToPage = (node) => node.scrollIntoView({ behavior: "smooth" });
@@ -32,14 +33,6 @@ function Btns(props) {
   });
 
   useEffect(initPages, []);
-
-  // `initPages` 가 re-rendering 된 이후 그 결과로 pages 변화를 감지해 실행되어야 하므로
-  // 그 다음 라이프 사이프 사이클에 작동할 수 있도록 분리시켰다.
-  useEffect(() => {
-    pages.forEach((page) => {
-      observer.observe(page);
-    });
-  }, [pages]);
 
   return (
     <ul id="scroll_navi" ref={btnRef}>
