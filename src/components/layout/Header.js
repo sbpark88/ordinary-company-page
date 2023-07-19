@@ -1,5 +1,5 @@
 import React from "react";
-import { viewUrl } from "../../modules/data/URL";
+import { ViewUrl } from "../../modules/data/URL";
 import { Link, NavLink } from "react-router-dom";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,15 +8,15 @@ function Header({ type }) {
   return (
     <header className={type}>
       <h1>
-        <Link to={viewUrl.root}>LOGO</Link>
+        <Link to={ViewUrl.root}>LOGO</Link>
       </h1>
       <ul id="gnb">
-        <Navigation path={viewUrl?.department} name={"Department"} />
-        <Navigation path={viewUrl?.community} name={"Community"} />
-        <Navigation path={viewUrl?.gallery} name={"Gallery"} />
-        <Navigation path={viewUrl?.youtube} name={"Youtube"} />
-        <Navigation path={viewUrl?.contact} name={"Contact"} />
-        <Navigation path={viewUrl?.members} name={"Members"} />
+        <Navigation path={ViewUrl?.department} name={"Department"} />
+        <Navigation path={ViewUrl?.community} name={"Community"} />
+        <Navigation path={ViewUrl?.gallery} name={"Gallery"} />
+        <Navigation path={ViewUrl?.youtube} name={"Youtube"} />
+        <Navigation path={ViewUrl?.contact} name={"Contact"} />
+        <Navigation path={ViewUrl?.members} name={"Members"} />
       </ul>
       <FontAwesomeIcon icon={faBars} />
     </header>

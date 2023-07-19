@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Layout from "../components/layout/Layout";
 import axios from "axios";
-import { objToUrlParams, openApi } from "../modules/data/URL";
+import { objToUrlParams, OpenApiURL } from "../modules/data/URL";
 import { dropLongString } from "../modules/utils/StringUtils";
 import Modal from "../components/layout/Modal";
 
@@ -19,7 +19,7 @@ function Youtube(props) {
   const [selectedId, setSelectedId] = useState("");
   const modal = useRef(null);
   const getYoutubeList = async () => {
-    const url = `${openApi.youtubePlaylist}?${objToUrlParams(options)}`;
+    const url = `${OpenApiURL.youtubePlaylist}?${objToUrlParams(options)}`;
 
     try {
       const response = await axios.get(url);

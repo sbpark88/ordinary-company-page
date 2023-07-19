@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/layout/Layout";
-import axios from "axios";
 import Constants from "../modules/data/Constants";
+import { getMembers } from "../modules/api/Members";
 
 function Department(props) {
   const [members, setMembers] = useState([]);
 
-  const getMembers = async () => {
-    const response = await axios.get(
-      `${process.env.PUBLIC_URL}/DB/members.json`
-    );
+  const getMemberList = async () => {
+    const response = await getMembers();
     await setMembers(response.data.members);
   };
 
   useEffect(() => {
     try {
-      getMembers();
+      getMemberList();
     } catch (e) {
       console.error(e);
     }

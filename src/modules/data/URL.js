@@ -1,4 +1,4 @@
-const viewUrl = {
+const ViewUrl = {
   root: "/",
   department: "/department",
   community: "/community",
@@ -8,8 +8,12 @@ const viewUrl = {
   members: "/members",
 };
 
-const openApi = {
+const OpenApiURL = {
   youtubePlaylist: " https://www.googleapis.com/youtube/v3/playlistItems",
+};
+
+const MembersURL = {
+  get: "/DB/members.json",
 };
 
 const objToUrlParams = (object) => {
@@ -29,4 +33,4 @@ const objToUrlParams = (object) => {
   }
 };
 
-export { viewUrl, openApi, objToUrlParams };
+export { ViewUrl, OpenApiURL, MembersURL, objToUrlParams };

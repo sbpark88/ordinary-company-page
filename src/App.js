@@ -9,7 +9,7 @@ import Gallery from "./pages/Gallery";
 import Members from "./pages/Members";
 import Youtube from "./pages/Youtube";
 import { Route, Switch } from "react-router-dom";
-import { viewUrl } from "./modules/data/URL";
+import { ViewUrl } from "./modules/data/URL";
 import FrontMain from "./components/main/FrontMain";
 
 function App() {
@@ -17,16 +17,16 @@ function App() {
     <>
       {/* Switch 내부에 중복되는 라우트에 대한 switch 처리를 자동으로 해준다 */}
       <Switch>
-        <Route exact path={viewUrl?.root} component={FrontMain} />
-        <Route path={viewUrl?.root} render={() => <Header type="sub" />} />
+        <Route exact path={ViewUrl?.root} component={FrontMain} />
+        <Route path={ViewUrl?.root} render={() => <Header type="sub" />} />
       </Switch>
 
-      <Route path={viewUrl?.department} component={Department} />
-      <Route path={viewUrl?.community} component={Community} />
-      <Route path={viewUrl?.gallery} component={Gallery} />
-      <Route path={viewUrl?.youtube} component={Youtube} />
-      <Route path={viewUrl?.contact} component={Contact} />
-      <Route path={viewUrl?.members} component={Members} />
+      <Route path={ViewUrl?.department} component={Department} />
+      <Route path={ViewUrl?.community} component={Community} />
+      <Route path={ViewUrl?.gallery} component={Gallery} />
+      <Route path={ViewUrl?.youtube} component={Youtube} />
+      <Route path={ViewUrl?.contact} component={Contact} />
+      <Route path={ViewUrl?.members} component={Members} />
 
       <Footer />
     </>
