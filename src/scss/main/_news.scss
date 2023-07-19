@@ -1,6 +1,38 @@
+$background-colors: #568197, #879ab8, #cbac6f, #bc8ddb;
+
 #news {
   width: 100%;
   height: 100vh;
   background-color: lightgreen;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4vw;
+  perspective: 500px;
+
+  article {
+    width: 15%;
+    height: 40%;
+    transform: translateY(200px) rotateY(140deg);
+    opacity: 0;
+    transition-duration: .5s;
+    padding: 10px;
+    color: #222;
+    font: 700 18px/1.2 'sans-serif';
+
+    @for $i from 1 through length($background-colors) {
+      &:nth-of-type(#{$i}) {
+        background-color: nth($background-colors, $i);
+        transition-delay: ($i - 1) * .2s;
+      }
+    }
+  }
+
+  &.on {
+    article {
+      transform: translateY(0) rotateY(0);
+      opacity: 1;
+    }
+  }
 }

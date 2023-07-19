@@ -16,6 +16,10 @@ const MembersURL = {
   get: "/DB/members.json",
 };
 
+const NewsURL = {
+  get: "/DB/news.json",
+};
+
 const objToUrlParams = (object) => {
   return Object.entries(object)
     .filter(([key, value]) => validParams(value))
@@ -33,4 +37,4 @@ const objToUrlParams = (object) => {
   }
 };
 
-export { ViewUrl, OpenApiURL, MembersURL, objToUrlParams };
+export { ViewUrl, OpenApiURL, MembersURL, NewsURL, objToUrlParams };

@@ -22,12 +22,12 @@ function Btns(props) {
   };
   const debouncedFindNodeAndScroll = debounce(findNodeAndScroll, 500);
 
-  // COMMENT: 1. 하위 컴포넌트 페이지 element 를 찾는다.
-  //  여기서 setPages 를 하기 때문에 함수에서 접근하려는 경우 pages 를 의존성으로 갖는 useEffect 가 반드시 존재해야한다.
+  // 1. 하위 컴포넌트 페이지 element 를 찾는다.
+  //    여기서 setPages 를 하기 때문에 함수에서 접근하려는 경우 pages 를 의존성으로 갖는 useEffect 가 반드시 존재해야한다.
   useEffect(initPages, []);
 
-  // COMMENT: 2. 'setViewPositionObserver' 함수와 'findNodeAndScroll' 함수에서 pages 를 사용하기 위해
-  //  pages 를 의존성으로 갖는 useEffect 에서 실행 후 re-render 가 이루어져야한다.
+  // 2. 'setViewPositionObserver' 함수와 'findNodeAndScroll' 함수에서 pages 를 사용하기 위해
+  //    pages 를 의존성으로 갖는 useEffect 에서 실행 후 re-render 가 이루어져야한다.
   useEffect(
     function initPagesAfterSetPages() {
       let observer, scrollCallback; // for unmount
@@ -42,8 +42,12 @@ function Btns(props) {
           if (entry.isIntersecting) {
             const activePage = entry.target?.dataset?.pageName;
             setActivePage(activePage);
+            entry.target.classList.add("on");
+            // 스크롤이 종료되면 각 section 이 중간에 걸치지 않도록 활성화 위치로 강제 이동
             scrollCallback = () => debouncedFindNodeAndScroll(activePage);
             window.addEventListener("scroll", scrollCallback);
+          } else {
+            entry.target.classList.remove("on");
           }
         });
       }
