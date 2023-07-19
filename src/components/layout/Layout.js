@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
-function Layout({ name, children, backgroundImage }) {
+function Layout({ name, children, backgroundImageUrl }) {
   const section = useRef(null);
 
   useEffect(function activation() {
@@ -20,7 +20,9 @@ function Layout({ name, children, backgroundImage }) {
       배경 이미지를 지정하고 동적으로 가져와 컴파일 할 수 없기 때문에
       props 로 전달하거나 styled component, tailwind css 등을 이용한다.
        */}
-      <figure style={{ backgroundImage: backgroundImage }}></figure>
+      <figure
+        style={{ backgroundImage: `url(${backgroundImageUrl})` }}
+      ></figure>
       <div className="inner">
         <h1>{name}</h1>
         {children}

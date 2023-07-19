@@ -4,6 +4,7 @@ import axios from "axios";
 import { objToUrlParams, OpenApiURL } from "../modules/data/URL";
 import { dropLongString } from "../modules/utils/StringUtils";
 import Modal from "../components/layout/Modal";
+import Constants from "../modules/data/Constants";
 
 const apiKey = (await import("../apiKey")).youtubeApiV3;
 
@@ -35,7 +36,10 @@ function Youtube(props) {
 
   return (
     <>
-      <Layout name={"Youtube"}>
+      <Layout
+        name={"Youtube"}
+        backgroundImageUrl={`${Constants.PUBLIC_URL}/img/Youtube.jpg`}
+      >
         {vids.map((vid) => (
           <VideoCard
             key={vid?.id}

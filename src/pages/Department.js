@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Layout from "../components/layout/Layout";
 import Constants from "../modules/data/Constants";
 import { getMembers } from "../modules/api/Members";
-
 function Department(props) {
   const [members, setMembers] = useState([]);
 
@@ -20,7 +19,10 @@ function Department(props) {
   }, []);
 
   return (
-    <Layout name={"Department"}>
+    <Layout
+      name={"Department"}
+      backgroundImageUrl={`${Constants.PUBLIC_URL}/img/Department.jpg`}
+    >
       {members.map((member, index) => (
         <MemberProfile
           key={`${member?.name}_${index}`}
