@@ -9,28 +9,29 @@ function Btns(props) {
       `.${btnScrollTargetClass}`
     );
     setPages([...nodes]);
+
+    /**
+     * 화면에 보여지는 페이지를 추적해 페이징 버튼 활성화를 업데이트한다.
+     * @param entries - Front main pages, e.g. "visual, news, ..."
+     * @param observer - Observer instance
+     */
+    const trackCurrentPage = (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const activePage = entries[0]?.target?.dataset?.pageName;
+          setActivePage(activePage);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(trackCurrentPage, {
+      threshold: [0.51, 0.75, 1],
+    });
+
     nodes.forEach((page) => observer.observe(page));
   };
 
   const scrollToPage = (node) => node.scrollIntoView({ behavior: "smooth" });
-
-  /**
-   * 화면에 보여지는 페이지를 추적해 페이징 버튼 활성화를 업데이트한다.
-   * @param entries - Front main pages, e.g. "visual, news, ..."
-   * @param observer - Observer instance
-   */
-  const trackCurrentPage = (entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const activePage = entries[0]?.target?.dataset?.pageName;
-        setActivePage(activePage);
-      }
-    });
-  };
-
-  const observer = new IntersectionObserver(trackCurrentPage, {
-    threshold: 0.51,
-  });
 
   useEffect(initPages, []);
 
