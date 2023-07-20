@@ -33,15 +33,33 @@ function Contact(props) {
     // return () => removeScript && removeScript();
   }, []);
 
+  const createLocation = (latitude, longitude) =>
+    new kakao.maps.LatLng(latitude, longitude);
+
+  const createMapInstance = (element, options) =>
+    new kakao.maps.Map(element, options);
+
+  const createMarker = (mapInstance, location) => {
+    const marker = new kakao.maps.Marker({ position: location });
+    marker.setMap(mapInstance);
+    return marker;
+  };
+
   useEffect(() => {
     if (loadKakaoMapScript) {
       kakao.maps.load(function () {
+        const targetLocation = createLocation(
+          location.latitude,
+          location.longitude
+        );
         const options = {
-          center: new kakao.maps.LatLng(location.latitude, location.longitude), // 지도의 중심좌표
+          center: targetLocation, // 지도의 중심좌표
           level: 3, // 지도의 레벨(확대, 축소 정도)
         };
 
-        const map = new kakao.maps.Map(kakaoMapRef.current, options);
+        const mapInstance = createMapInstance(kakaoMapRef.current, options);
+
+        const marker = createMarker(mapInstance, targetLocation);
       });
     }
   }, [loadKakaoMapScript, location]);
