@@ -9,8 +9,8 @@ function Contact(props) {
   const kakaoMapRef = useRef(null);
   const [loadKakaoMapScript, setLoadKakaoMapScript] = useState(null);
   const [location, setLocation] = useState({
-    latitude: 33.450701, // 위도
-    longitude: 126.570667, // 경도
+    latitude: 37.517279041628505, // 위도
+    longitude: 126.90351232678233, // 경도
   });
   const { kakao } = window;
   let kakaoMap;
@@ -43,16 +43,16 @@ function Contact(props) {
           location.latitude,
           location.longitude
         );
-
         const mapInstance = kakaoMap.createMapInstance(
           kakaoMapRef.current,
-          targetLocation
+          targetLocation,
+          2
         );
 
         const markerImage = kakaoMap.createMarkerImage(
           `${Constants.PUBLIC_URL}/img/marker1.png`,
           { x: 232, y: 99 },
-          { x: 116, y: 99 }
+          { x: 115, y: 110 }
         );
 
         const marker = kakaoMap.createMarker(
