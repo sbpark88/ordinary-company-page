@@ -13,7 +13,9 @@ function Contact(props) {
     longitude: 126.90351232678233, // 경도
   });
   const { kakao } = window;
-  let kakaoMap;
+  const kakaoMap = useRef(); // KakaoMap Class Instance
+  const mapInstance = useRef(); // KakaoMap Instance
+  const [traffic, setTraffic] = useState(false);
 
   useEffect(() => {
     let removeScript;
@@ -37,26 +39,26 @@ function Contact(props) {
 
   useEffect(() => {
     if (loadKakaoMapScript) {
-      kakaoMap = new KakaoMap(kakao);
-      kakaoMap.load(function () {
-        const targetLocation = kakaoMap.createLocation(
+      kakaoMap.current = new KakaoMap(kakao);
+      kakaoMap.current?.load(function () {
+        const targetLocation = kakaoMap.current?.createLocation(
           location.latitude,
           location.longitude
         );
-        const mapInstance = kakaoMap.createMapInstance(
+        mapInstance.current = kakaoMap.current?.createMapInstance(
           kakaoMapRef.current,
           targetLocation,
           2
         );
 
-        const markerImage = kakaoMap.createMarkerImage(
+        const markerImage = kakaoMap.current?.createMarkerImage(
           `${Constants.PUBLIC_URL}/img/marker1.png`,
           { x: 232, y: 99 },
           { x: 115, y: 110 }
         );
 
-        const marker = kakaoMap.createMarker(
-          mapInstance,
+        const marker = kakaoMap.current?.createMarker(
+          mapInstance.current,
           targetLocation,
           markerImage
         );
@@ -64,11 +66,22 @@ function Contact(props) {
     }
   }, [loadKakaoMapScript, location]);
 
+  useEffect(() => {
+    kakaoMap.current?.displayTraffic(mapInstance.current, traffic);
+  }, [traffic]);
+
   return (
     <Layout
       name={"Contact"}
       backgroundImageUrl={`${Constants.PUBLIC_URL}/img/Location.jpg`}
     >
+      <button
+        id="btnToggleTraffic"
+        onClick={() => setTraffic(!traffic)}
+        className={traffic ? "on" : ""}
+      >
+        {traffic ? "교통정보 On" : "교통정보 Off"}
+      </button>
       <div id="kakaoMap" ref={kakaoMapRef}></div>
     </Layout>
   );

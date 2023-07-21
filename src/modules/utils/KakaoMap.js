@@ -35,4 +35,10 @@ export class KakaoMap {
     marker.setMap(mapInstance);
     return marker;
   }
+
+  displayTraffic(mapInstance, display) {
+    display
+      ? mapInstance?.addOverlayMapTypeId(this.#kakaoMaps.MapTypeId.TRAFFIC)
+      : mapInstance?.removeOverlayMapTypeId(this.#kakaoMaps.MapTypeId.TRAFFIC);
+  }
 }
