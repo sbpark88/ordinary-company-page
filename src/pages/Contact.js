@@ -3,6 +3,7 @@ import Layout from "../components/layout/Layout";
 import { kakaoMapApi } from "../apiKey";
 import { loadScript } from "../modules/utils/ImportExternalScript";
 import Constants from "../modules/data/Constants";
+import { KakaoMap } from "../modules/utils/KakaoMap";
 
 function Contact(props) {
   const kakaoMapRef = useRef(null);
@@ -12,6 +13,7 @@ function Contact(props) {
     longitude: 126.570667, // 경도
   });
   const { kakao } = window;
+  let kakaoMap;
 
   useEffect(() => {
     let removeScript;
@@ -33,33 +35,31 @@ function Contact(props) {
     // return () => removeScript && removeScript();
   }, []);
 
-  const createLocation = (latitude, longitude) =>
-    new kakao.maps.LatLng(latitude, longitude);
-
-  const createMapInstance = (element, options) =>
-    new kakao.maps.Map(element, options);
-
-  const createMarker = (mapInstance, location) => {
-    const marker = new kakao.maps.Marker({ position: location });
-    marker.setMap(mapInstance);
-    return marker;
-  };
-
   useEffect(() => {
     if (loadKakaoMapScript) {
-      kakao.maps.load(function () {
-        const targetLocation = createLocation(
+      kakaoMap = new KakaoMap(kakao);
+      kakaoMap.load(function () {
+        const targetLocation = kakaoMap.createLocation(
           location.latitude,
           location.longitude
         );
-        const options = {
-          center: targetLocation, // 지도의 중심좌표
-          level: 3, // 지도의 레벨(확대, 축소 정도)
-        };
 
-        const mapInstance = createMapInstance(kakaoMapRef.current, options);
+        const mapInstance = kakaoMap.createMapInstance(
+          kakaoMapRef.current,
+          targetLocation
+        );
 
-        const marker = createMarker(mapInstance, targetLocation);
+        const markerImage = kakaoMap.createMarkerImage(
+          `${Constants.PUBLIC_URL}/img/marker1.png`,
+          { x: 232, y: 99 },
+          { x: 116, y: 99 }
+        );
+
+        const marker = kakaoMap.createMarker(
+          mapInstance,
+          targetLocation,
+          markerImage
+        );
       });
     }
   }, [loadKakaoMapScript, location]);
