@@ -67,6 +67,13 @@ function Contact(props) {
         //    리액트에서 카카오 지도 줌 컨트롤을 추가하면 화면을 그리기 전
         //    `kakaoMapRef.current.innerHTML = ""` 를 해줘야 지도 중첨이 안 생긴다.
         kakaoMap.current?.addZoomControl(mapInstance.current);
+
+        // 5. 브라우저 리사이즈 시 지도 위치 센터 유지
+        const setLocationToCenter = () => {
+          mapInstance.current.setCenter(targetLocation);
+        };
+        window.addEventListener("resize", setLocationToCenter);
+        return () => window.removeEventListener("resize", setLocationToCenter);
       });
     }
   }, [loadKakaoMapScript, location]);
