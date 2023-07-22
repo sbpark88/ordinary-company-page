@@ -5,6 +5,7 @@ import { loadScript } from "../modules/utils/ImportExternalScript";
 import Constants from "../modules/data/Constants";
 import { KakaoMap } from "../modules/utils/KakaoMap";
 import { contactLocations } from "../modules/data/ContactLocations";
+import { applyMapToObject } from "../modules/utils/ObjectUtils";
 
 function Contact(props) {
   const kakaoMapRef = useRef(null);
@@ -48,13 +49,13 @@ function Contact(props) {
           4
         );
 
-        Object.entries(contactLocations).map(([name, loc]) =>
+        const applyCreateMarker = (name, loc) =>
           kakaoMap.current?.createMarker(
             mapInstance.current,
             kakaoMap.current?.createLocation(loc.location),
             kakaoMap.current?.createMarkerImage({ ...loc })
-          )
-        );
+          );
+        const marker = applyMapToObject(contactLocations)(applyCreateMarker);
       });
     }
   }, [loadKakaoMapScript, location]);
@@ -63,22 +64,24 @@ function Contact(props) {
     kakaoMap.current?.displayTraffic(mapInstance.current, traffic);
   }, [location, traffic]);
 
+  function ContactLocationLiElement(name, loc) {
+    return (
+      <li
+        key={name}
+        onClick={() => setLocation(loc)}
+        className={loc.name === location.name ? "on" : ""}
+      >
+        {loc.name}
+      </li>
+    );
+  }
+
   return (
     <Layout
       name={"Contact"}
       backgroundImageUrl={`${Constants.PUBLIC_URL}/img/Location.jpg`}
     >
-      <ul>
-        {Object.entries(contactLocations).map(([name, loc]) => (
-          <li
-            key={name}
-            onClick={() => setLocation(loc)}
-            className={loc.name === location.name ? "on" : ""}
-          >
-            {loc.name}
-          </li>
-        ))}
-      </ul>
+      <ul>{applyMapToObject(contactLocations)(ContactLocationLiElement)}</ul>
       <button
         id="btnToggleTraffic"
         onClick={() => setTraffic(!traffic)}
