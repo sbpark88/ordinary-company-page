@@ -4,15 +4,13 @@ import { kakaoMapApi } from "../apiKey";
 import { loadScript } from "../modules/utils/ImportExternalScript";
 import Constants from "../modules/data/Constants";
 import { KakaoMap } from "../modules/utils/KakaoMap";
+import { contactLocations } from "../modules/data/ContactLocations";
 
 function Contact(props) {
   const kakaoMapRef = useRef(null);
   const [loadKakaoMapScript, setLoadKakaoMapScript] = useState(null);
-  const [location, setLocation] = useState({
-    latitude: 37.517279041628505, // 위도
-    longitude: 126.90351232678233, // 경도
-  });
-  const { kakao } = window;
+  const [location, setLocation] = useState(contactLocations.coex);
+
   const kakaoMap = useRef(); // KakaoMap Class Instance
   const mapInstance = useRef(); // KakaoMap Instance
   const [traffic, setTraffic] = useState(false);
@@ -39,28 +37,23 @@ function Contact(props) {
 
   useEffect(() => {
     if (loadKakaoMapScript) {
-      kakaoMap.current = new KakaoMap(kakao);
+      kakaoMap.current = new KakaoMap(window.kakao);
       kakaoMap.current?.load(function () {
         const targetLocation = kakaoMap.current?.createLocation(
-          location.latitude,
-          location.longitude
+          location.location
         );
         mapInstance.current = kakaoMap.current?.createMapInstance(
           kakaoMapRef.current,
           targetLocation,
-          2
+          4
         );
 
-        const markerImage = kakaoMap.current?.createMarkerImage(
-          `${Constants.PUBLIC_URL}/img/marker1.png`,
-          { x: 232, y: 99 },
-          { x: 115, y: 110 }
-        );
-
-        const marker = kakaoMap.current?.createMarker(
-          mapInstance.current,
-          targetLocation,
-          markerImage
+        Object.entries(contactLocations).map(([name, loc]) =>
+          kakaoMap.current?.createMarker(
+            mapInstance.current,
+            kakaoMap.current?.createLocation(loc.location),
+            kakaoMap.current?.createMarkerImage({ ...loc })
+          )
         );
       });
     }
@@ -68,13 +61,24 @@ function Contact(props) {
 
   useEffect(() => {
     kakaoMap.current?.displayTraffic(mapInstance.current, traffic);
-  }, [traffic]);
+  }, [location, traffic]);
 
   return (
     <Layout
       name={"Contact"}
       backgroundImageUrl={`${Constants.PUBLIC_URL}/img/Location.jpg`}
     >
+      <ul>
+        {Object.entries(contactLocations).map(([name, loc]) => (
+          <li
+            key={name}
+            onClick={() => setLocation(loc)}
+            className={loc.name === location.name ? "on" : ""}
+          >
+            {loc.name}
+          </li>
+        ))}
+      </ul>
       <button
         id="btnToggleTraffic"
         onClick={() => setTraffic(!traffic)}

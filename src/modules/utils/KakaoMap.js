@@ -8,7 +8,7 @@ export class KakaoMap {
     return this.#kakaoMaps.load;
   }
 
-  createLocation(latitude, longitude) {
+  createLocation({ latitude, longitude }) {
     return new this.#kakaoMaps.LatLng(latitude, longitude);
   }
 
@@ -20,7 +20,7 @@ export class KakaoMap {
     return new this.#kakaoMaps.Map(element, options);
   }
 
-  createMarkerImage(imageSrc, imageSize, imageOffset) {
+  createMarkerImage({ imageSrc, imageSize, imageOffset }) {
     return new this.#kakaoMaps.MarkerImage(
       imageSrc,
       new this.#kakaoMaps.Size(imageSize?.x, imageSize?.y),
