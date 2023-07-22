@@ -38,8 +38,10 @@ function Contact(props) {
 
   useEffect(() => {
     if (loadKakaoMapScript) {
+      kakaoMapRef.current.innerHTML = ""; // 리액트에서 카카오 지도 줌 컨트롤러를 추가하면 화면을 그리기 전 지도를 지워야 중첩 없이 정상 작동한다.
       kakaoMap.current = new KakaoMap(window.kakao);
       kakaoMap.current?.load(function () {
+        // 1. 지도 생성
         const targetLocation = kakaoMap.current?.createLocation(
           location.location
         );
@@ -49,19 +51,29 @@ function Contact(props) {
           4
         );
 
-        const applyCreateMarker = (name, loc) =>
-          kakaoMap.current?.createMarker(
+        // 2. 지정된 위치에 마커 표시
+        const applyAddMarker = (name, loc) =>
+          kakaoMap.current?.addMarker(
             mapInstance.current,
             kakaoMap.current?.createLocation(loc.location),
             kakaoMap.current?.createMarkerImage({ ...loc })
           );
-        const marker = applyMapToObject(contactLocations)(applyCreateMarker);
+        const marker = applyMapToObject(contactLocations)(applyAddMarker);
+
+        // 3. 지도 타입 변환 컨트롤 추가
+        kakaoMap.current?.addTypeControl(mapInstance.current);
+
+        // 4. 지도 확대/축소 컨트롤 추가
+        //    리액트에서 카카오 지도 줌 컨트롤을 추가하면 화면을 그리기 전
+        //    `kakaoMapRef.current.innerHTML = ""` 를 해줘야 지도 중첨이 안 생긴다.
+        kakaoMap.current?.addZoomControl(mapInstance.current);
       });
     }
   }, [loadKakaoMapScript, location]);
 
   useEffect(() => {
-    kakaoMap.current?.displayTraffic(mapInstance.current, traffic);
+    // 교통정보 추가/제거
+    kakaoMap.current?.addTraffic(mapInstance.current, traffic);
   }, [location, traffic]);
 
   function ContactLocationLiElement(name, loc) {

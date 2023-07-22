@@ -1,5 +1,16 @@
 export class KakaoMap {
   #kakaoMaps;
+
+  controlPosition = {
+    top: "TOP",
+    topLeft: "TOPLEFT",
+    topRight: "TOPRIGHT",
+    left: "LEFT",
+    right: "RIGHT",
+    bottomLeft: "BOTTOMLEFT",
+    bottom: "BOTTOM",
+    bottomRight: "BOTTOMRIGHT",
+  };
   constructor(kakao) {
     this.#kakaoMaps = kakao.maps;
   }
@@ -27,7 +38,7 @@ export class KakaoMap {
       { offset: new this.#kakaoMaps.Point(imageOffset?.x, imageOffset?.y) }
     );
   }
-  createMarker(mapInstance, location, image) {
+  addMarker(mapInstance, location, image) {
     const marker = new this.#kakaoMaps.Marker({
       position: location,
       image: image,
@@ -36,9 +47,31 @@ export class KakaoMap {
     return marker;
   }
 
-  displayTraffic(mapInstance, display) {
+  addTraffic(mapInstance, display) {
     display
       ? mapInstance?.addOverlayMapTypeId(this.#kakaoMaps.MapTypeId.TRAFFIC)
       : mapInstance?.removeOverlayMapTypeId(this.#kakaoMaps.MapTypeId.TRAFFIC);
+  }
+
+  #createMapTypeControl() {
+    return new this.#kakaoMaps.MapTypeControl();
+  }
+
+  addTypeControl(mapInstance, controlPosition = this.controlPosition.topRight) {
+    mapInstance?.addControl(
+      this.#createMapTypeControl(),
+      this.#kakaoMaps.ControlPosition[controlPosition]
+    );
+  }
+
+  #createZoomControl() {
+    return new this.#kakaoMaps.ZoomControl();
+  }
+
+  addZoomControl(mapInstance, controlPosition = this.controlPosition.right) {
+    mapInstance?.addControl(
+      this.#createZoomControl(),
+      this.#kakaoMaps.ControlPosition[controlPosition]
+    );
   }
 }
