@@ -6,6 +6,8 @@ import Constants from "../modules/data/Constants";
 import { KakaoMap } from "../modules/utils/KakaoMap";
 import { contactLocations } from "../modules/data/ContactLocations";
 import { applyMapToObject } from "../modules/utils/ObjectUtils";
+import EmailJs from "../components/common/EmailJs";
+import { toast } from "react-toastify";
 
 function Contact(props) {
   const kakaoMapRef = useRef(null);
@@ -95,6 +97,11 @@ function Contact(props) {
     );
   }
 
+  const sendEmailSuccess = () =>
+    toast.success("이메일을 전송했습니다.", Constants.TOAST_POSITION);
+  const sendEmailFail = () =>
+    toast.error("이메일 전송을 실패했습니다.", Constants.TOAST_POSITION);
+
   return (
     <Layout
       name={"Contact"}
@@ -109,6 +116,10 @@ function Contact(props) {
         {traffic ? "교통정보 On" : "교통정보 Off"}
       </button>
       <div id="kakaoMap" ref={kakaoMapRef}></div>
+      <EmailJs
+        sendEmailSuccess={sendEmailSuccess}
+        sendEmailFail={sendEmailFail}
+      />
     </Layout>
   );
 }

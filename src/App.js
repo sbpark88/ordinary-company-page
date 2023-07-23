@@ -11,6 +11,8 @@ import Youtube from "./pages/Youtube";
 import { Route, Switch } from "react-router-dom";
 import { ViewUrl } from "./modules/data/URL";
 import FrontMain from "./components/main/FrontMain";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
       <Route path={ViewUrl?.members} component={Members} />
 
       <Footer />
+
+      <ToastContainer />
     </>
   );
 }
