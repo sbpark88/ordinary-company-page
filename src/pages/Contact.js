@@ -97,11 +97,6 @@ function Contact(props) {
     );
   }
 
-  const sendEmailSuccess = () =>
-    toast.success("이메일을 전송했습니다.", Constants.TOAST_POSITION);
-  const sendEmailFail = () =>
-    toast.error("이메일 전송을 실패했습니다.", Constants.TOAST_POSITION);
-
   return (
     <Layout
       name={"Contact"}
@@ -129,3 +124,8 @@ export default Contact;
 const kakaoMapApiBaseUrl =
   "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=";
 const kakaoMapApiScriptSrc = kakaoMapApiBaseUrl + kakaoMapApi;
+
+const sendEmailSuccess = () =>
+  toast.success("이메일을 전송했습니다.", Constants.TOAST_POSITION);
+const sendEmailFail = () =>
+  toast.error("이메일 전송을 실패했습니다.", Constants.TOAST_POSITION);

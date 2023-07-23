@@ -5,6 +5,7 @@ import { pipe } from "../../modules/utils/FunctionalProgramming";
 import { stringIsEmpty } from "../../modules/utils/StringUtils";
 import { toast } from "react-toastify";
 import Constants from "../../modules/data/Constants";
+import { throttle } from "../../modules/utils/Performance";
 
 function EmailJs({ sendEmailSuccess, sendEmailFail }) {
   const form = useRef();
@@ -34,25 +35,24 @@ function EmailJs({ sendEmailSuccess, sendEmailFail }) {
       )
       .then(successCallback, sendEmailFail);
   };
+  const throttledSendEmail = throttle(sendEmail, 3000);
 
   return (
-    <>
-      <form className="emailjs" ref={form} onSubmit={sendEmail}>
-        <div>
-          <label>Name</label>
-          <input type="text" name="user_name" />
-        </div>
-        <div>
-          <label>Email</label>
-          <input type="email" name="user_email" />
-        </div>
-        <div>
-          <label>Message</label>
-          <textarea name="message" />
-          <input type="submit" value="Send" />
-        </div>
-      </form>
-    </>
+    <form className="emailjs" ref={form} onSubmit={throttledSendEmail}>
+      <div>
+        <label>Name</label>
+        <input type="text" name="user_name" />
+      </div>
+      <div>
+        <label>Email</label>
+        <input type="email" name="user_email" />
+      </div>
+      <div>
+        <label>Message</label>
+        <textarea name="message" />
+        <input type="submit" value="Send" />
+      </div>
+    </form>
   );
 }
 
