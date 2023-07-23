@@ -1,15 +1,15 @@
 export class KakaoMap {
   #kakaoMaps;
 
-  controlPosition = {
-    top: "TOP",
-    topLeft: "TOPLEFT",
-    topRight: "TOPRIGHT",
-    left: "LEFT",
-    right: "RIGHT",
-    bottomLeft: "BOTTOMLEFT",
-    bottom: "BOTTOM",
-    bottomRight: "BOTTOMRIGHT",
+  CONTROL_POSITION = {
+    TOP: "TOP",
+    TOP_LEFT: "TOPLEFT",
+    TOP_RIGHT: "TOPRIGHT",
+    LEFT: "LEFT",
+    RIGHT: "RIGHT",
+    BOTTOM_LEFT: "BOTTOMLEFT",
+    BOTTOM: "BOTTOM",
+    BOTTOM_RIGHT: "BOTTOMRIGHT",
   };
   constructor(kakao) {
     this.#kakaoMaps = kakao.maps;
@@ -57,7 +57,10 @@ export class KakaoMap {
     return new this.#kakaoMaps.MapTypeControl();
   }
 
-  addTypeControl(mapInstance, controlPosition = this.controlPosition.topRight) {
+  addTypeControl(
+    mapInstance,
+    controlPosition = this.CONTROL_POSITION.TOP_RIGHT
+  ) {
     mapInstance?.addControl(
       this.#createMapTypeControl(),
       this.#kakaoMaps.ControlPosition[controlPosition]
@@ -68,7 +71,7 @@ export class KakaoMap {
     return new this.#kakaoMaps.ZoomControl();
   }
 
-  addZoomControl(mapInstance, controlPosition = this.controlPosition.right) {
+  addZoomControl(mapInstance, controlPosition = this.CONTROL_POSITION.RIGHT) {
     mapInstance?.addControl(
       this.#createZoomControl(),
       this.#kakaoMaps.ControlPosition[controlPosition]
