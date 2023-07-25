@@ -1,3 +1,5 @@
+import { debounce } from "../../modules/utils/Performance";
+
 export function Textarea({
   label,
   name,
@@ -13,6 +15,8 @@ export function Textarea({
     setData(value);
   };
 
+  const debouncedHandleChange = debounce(handleChange);
+
   return (
     <tr>
       <th>
@@ -22,11 +26,11 @@ export function Textarea({
         <textarea
           name={name}
           id={name}
-          value={data}
+          defaultValue={data}
           cols={size.cols}
           rows={size.rows}
           placeholder={placeholder}
-          onChange={handleChange}
+          onChange={debouncedHandleChange}
           style={style}
         />
         {errorMessage && <p className="error-message">{errorMessage}</p>}

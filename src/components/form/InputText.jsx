@@ -1,3 +1,5 @@
+import { debounce } from "../../modules/utils/Performance";
+
 export function InputText({
   label,
   name,
@@ -12,6 +14,8 @@ export function InputText({
     setData(value);
   };
 
+  const debouncedHandleChange = debounce(handleChange);
+
   return (
     <tr>
       <th>
@@ -22,9 +26,9 @@ export function InputText({
           type="text"
           name={name}
           id={name}
-          value={data}
+          defaultValue={data}
           placeholder={placeholder}
-          onChange={handleChange}
+          onChange={debouncedHandleChange}
         />
         {errorMessage && <p className="error-message">{errorMessage}</p>}
       </td>
