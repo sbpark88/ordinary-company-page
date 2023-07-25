@@ -1,6 +1,6 @@
 import React from "react";
 
-export function InputRadio({
+export default function InputRadio({
   label,
   name,
   data,

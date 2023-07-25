@@ -1,6 +1,6 @@
 import { debounce } from "../../modules/utils/Performance";
 
-export function Textarea({
+export default function Textarea({
   label,
   name,
   data,

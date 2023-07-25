@@ -1,5 +1,5 @@
 import React from "react";
-export function InputCheckbox({
+export default function InputCheckbox({
   label,
   name,
   data,

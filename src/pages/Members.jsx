@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Layout from "../components/layout/Layout";
 import Constants from "../modules/data/Constants";
-import { InputText } from "../components/form/InputText";
-import { InputRadio } from "../components/form/InputRadio";
-import { InputCheckbox } from "../components/form/InputCheckbox";
-import { Select } from "../components/form/Select";
-import { Textarea } from "../components/form/Textarea";
+import InputText from "../components/form/InputText";
+import InputRadio from "../components/form/InputRadio";
+import InputCheckbox from "../components/form/InputCheckbox";
+import Select from "../components/form/Select";
+import Textarea from "../components/form/Textarea";
 
 function Members(props) {
   const [registerForm, setRegisterForm] = useState({

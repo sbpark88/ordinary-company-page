@@ -1,6 +1,6 @@
 import { debounce } from "../../modules/utils/Performance";
 
-export function InputText({
+export default function InputText({
   label,
   name,
   data,
