@@ -2,9 +2,9 @@ import React from "react";
 
 export function InputRadio({
   label,
+  name,
   data,
   setData,
-  property,
   properties,
   errorMessage,
 }) {
@@ -18,20 +18,26 @@ export function InputRadio({
     <tr>
       <th>{label}</th>
       <td onChange={handleChange}>
-        {properties?.map((prop) => (
-          <React.Fragment key={prop}>
-            <label htmlFor={prop}>{prop}</label>
-            <input
-              type="radio"
-              name={property}
-              id={prop}
-              defaultValue={prop}
-              defaultChecked={data}
-            />
-          </React.Fragment>
+        {properties?.map((property) => (
+          <Radio key={property} name={name} data={data} property={property} />
         ))}
         {errorMessage && <p className="error-message">{errorMessage}</p>}
       </td>
     </tr>
+  );
+}
+
+function Radio({ name, data, property }) {
+  return (
+    <>
+      <label htmlFor={property}>{property}</label>
+      <input
+        type="radio"
+        name={name}
+        id={property}
+        defaultValue={property}
+        defaultChecked={data === property}
+      />
+    </>
   );
 }

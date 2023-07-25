@@ -1,10 +1,8 @@
-import { useEffect } from "react";
-
 export function InputText({
   label,
+  name,
   data,
   setData,
-  property,
   placeholder,
   errorMessage,
 }) {
@@ -13,20 +11,17 @@ export function InputText({
     const { value } = event.target;
     setData(value);
   };
-  useEffect(() => {
-    console.log(property, data);
-  }, [data]);
 
   return (
     <tr>
       <th>
-        <label htmlFor={property}>{label}</label>
+        <label htmlFor={name}>{label}</label>
       </th>
       <td>
         <input
           type="text"
-          name={property}
-          id={property}
+          name={name}
+          id={name}
           value={data}
           placeholder={placeholder}
           onChange={handleChange}
