@@ -6,18 +6,11 @@ import InputRadio from "../components/form/InputRadio";
 import InputCheckbox from "../components/form/InputCheckbox";
 import Select from "../components/form/Select";
 import Textarea from "../components/form/Textarea";
+import { toast } from "react-toastify";
+import { throttle } from "../modules/utils/Performance";
 
 function Members(props) {
-  const [registerForm, setRegisterForm] = useState({
-    userId: "",
-    password: "",
-    rePassword: "",
-    email: "",
-    gender: "",
-    interest: [],
-    education: "",
-    comment: "",
-  });
+  const [registerForm, setRegisterForm] = useState(initialRegisterFormState);
 
   const setProperty = (property) => (value) =>
     setRegisterForm({ ...registerForm, [property]: value });
@@ -33,6 +26,15 @@ function Members(props) {
     comment: "",
   });
 
+  const handleReset = (event) => setRegisterForm(initialRegisterFormState);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    sendRegisterFormSuccess();
+    handleReset();
+  };
+  const throttledHandleSubmit = throttle(handleSubmit, 3000);
+
   return (
     <Layout
       name={"Member"}
@@ -40,8 +42,8 @@ function Members(props) {
     >
       <form>
         <fieldset>
-          <legend>회원등록 폼 양식</legend>
-          <table border="1">
+          <legend hidden>회원등록 폼 양식</legend>
+          <table>
             <tbody>
               <InputText
                 label="USER ID"
@@ -96,7 +98,7 @@ function Members(props) {
                 name="education"
                 data={registerForm.education}
                 setData={setProperty("education")}
-                propertiesWithName={educationProppertiesWithName}
+                propertiesWithName={educationPropertiesWithName}
                 errorMessage={errorMessage.education}
               />
               <Textarea
@@ -108,6 +110,22 @@ function Members(props) {
                 placeholder="남기고 싶은 내용을 적어주세요."
                 errorMessage={errorMessage.comment}
               />
+              <tr>
+                <th colSpan="2">
+                  <button
+                    type="reset"
+                    className="custom-button-red"
+                    children="Reset"
+                    onClick={handleReset}
+                  />
+                  <button
+                    type="button"
+                    className="custom-button-green"
+                    children="Register"
+                    onClick={throttledHandleSubmit}
+                  />
+                </th>
+              </tr>
             </tbody>
           </table>
         </fieldset>
@@ -118,9 +136,19 @@ function Members(props) {
 
 export default Members;
 
+const initialRegisterFormState = {
+  userId: "",
+  password: "",
+  rePassword: "",
+  email: "",
+  gender: "",
+  interest: [],
+  education: "",
+  comment: "",
+};
 const genderProperties = ["male", "female"];
 const interestProperties = ["sports", "music", "game"];
-const educationProppertiesWithName = [
+const educationPropertiesWithName = [
   ["", "최종학력을 선택하세요."],
   ["elementary-school", "초등학교 졸업"],
   ["middle-school", "중학교 졸업"],
@@ -131,3 +159,8 @@ const commentTextareaSize = {
   cols: 30,
   rows: 3,
 };
+
+const sendRegisterFormSuccess = () =>
+  toast.success("회원 등록을 축하드립니다!", Constants.TOAST_POSITION);
+const sendRegisterFormFail = () =>
+  toast.error("회원 등록에 실패했습니다.", Constants.TOAST_POSITION);

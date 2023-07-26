@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@100&display=swap');
+
 $tablet: 1199px;
 $mobile: 759px;
 
@@ -21,3 +22,54 @@ $mobile: 759px;
 @import 'pages/youtube';
 @import 'pages/contact';
 @import 'pages/member';
+
+/****************************************************************************************/
+
+$red: 200, 0, 0;
+$green: 0, 200, 0;
+$blue: 0, 0, 200;
+$gray: 200, 200, 200;
+$blur: .3;
+$bold: .8;
+
+
+@mixin colored-button($color: $gray) {
+  $rgb-r: nth($color, 1);
+  $rgb-g: nth($color, 2);
+  $rgb-b: nth($color, 3);
+  $rgba-color: rgba($rgb-r, $rgb-g, $rgb-b, $blur);
+  $hover-color: rgba($rgb-r, $rgb-g, $rgb-b, $bold);
+
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  width: 150px;
+  height: 30px;
+  text-align: center;
+  margin: 0 10px;
+  cursor: pointer;
+  background-color: $rgba-color;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    transition: .5s;
+    background-color: $hover-color;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+// Example usage with custom colors
+.custom-button-gray {
+  @include colored-button();
+}
+
+.custom-button-red {
+  @include colored-button($red);
+}
+
+.custom-button-green {
+  @include colored-button($green);
+}
+
+.custom-button-blue {
+  @include colored-button($blue);
+}

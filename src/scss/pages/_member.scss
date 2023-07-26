@@ -1,0 +1,72 @@
+.member {
+  > .inner {
+    table {
+      $border-thick: 2px solid #333;
+      $border-skinny: 1px solid #bbb;
+      $cell-padding: 15px 30px;
+
+      width: 100%;
+      border-top: $border-thick;
+      border-bottom: $border-thick;
+
+
+      th {
+        width: 20%;
+        border-bottom: $border-skinny;
+        padding: $cell-padding;
+        text-align: left;
+        vertical-align: middle;
+
+        &:last-child {
+          text-align: center;
+        }
+      }
+
+      td {
+        border-bottom: $border-skinny;
+        border-left: $border-skinny;
+        padding: $cell-padding;
+        vertical-align: middle;
+
+        label {
+          display: inline-block; // first-letter 를 적용하기 위해 inline-block 으로 변경.
+          &::first-letter {
+            text-transform: capitalize;
+          }
+        }
+
+        .writable {
+          border: 1px solid #bbb;
+          background-color: #f3ffff;
+          width: 40%;
+          min-width: 200px;
+          padding: 6px 10px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        textarea {
+          @extend .writable;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+          margin-right: 20px;
+          margin-left: 5px;
+        }
+
+        select {
+          @extend .writable;
+          cursor: pointer;
+        }
+
+        p {
+          display: inline-block;
+          font: 11px/1 '돋움';
+          color: deeppink;
+          margin: 5px 10px;
+        }
+      }
+    }
+  }
+}
