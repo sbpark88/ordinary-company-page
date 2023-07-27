@@ -16,6 +16,8 @@ const Constants = {
     UPPER_CASE: /[A-Z]/,
     NUMBERS: /\d/,
     SPECIAL_CHARACTERS: /[!@#$%^&*()_+]/,
+    ONLY_STRING: /^[a-zA-Z]+$/,
+    ONLY_STRING_AND_NUMBER: /^[a-zA-Z0-9]+$/,
   },
 };
 
