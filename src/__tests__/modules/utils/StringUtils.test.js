@@ -12,6 +12,8 @@ import {
   stringIsEmpty,
   strLengthIsLessThanOrEqual,
   strLengthIsGreaterThanOrEqual,
+  stringOnlyContainsAlphabets,
+  stringOnlyContainsAlphabetsAndNumbers,
 } from "../../../modules/utils/StringUtils";
 
 // dropLongString 함수의 테스트
@@ -149,6 +151,41 @@ test("String contains at least one special character", () => {
 test("String does not contain any special character", () => {
   const testString = "7Aa1";
   expect(stringContainsSpecialCharacters(testString)).toBe(false);
+});
+
+// stringOnlyContainsAlphabets 함수의 테스트
+test("String only contains alphabets.", () => {
+  const testString = "HelloWorld";
+  expect(stringOnlyContainsAlphabets(testString)).toBe(true);
+});
+
+test("String does not only contains alphabets.", () => {
+  const stringWithNumber = "HelloW0rld";
+  const stringWithSpecialCharacter = "HelloWor!d";
+
+  expect(stringOnlyContainsAlphabets(stringWithNumber)).toBe(false);
+  expect(stringOnlyContainsAlphabets(stringWithSpecialCharacter)).toBe(false);
+});
+
+// stringOnlyContainsAlphabets 함수의 테스트
+test("String only contains alphabets and numbers", () => {
+  const onlyString = "HelloWorld";
+  const onlyNumbers = "12308366";
+  const onlyStringAndNumbers = "HelloW0r1d";
+
+  expect(stringOnlyContainsAlphabetsAndNumbers(onlyString)).toBe(true);
+  expect(stringOnlyContainsAlphabetsAndNumbers(onlyNumbers)).toBe(true);
+  expect(stringOnlyContainsAlphabetsAndNumbers(onlyStringAndNumbers)).toBe(
+    true
+  );
+});
+
+test("String does not only contains alphabets and numbers", () => {
+  const stringWithSpecialCharacter = "HelloWor!d";
+
+  expect(
+    stringOnlyContainsAlphabetsAndNumbers(stringWithSpecialCharacter)
+  ).toBe(false);
 });
 
 // strLengthIsLessThanOrEqual 함수의 테스트
