@@ -28,6 +28,14 @@ export const stringContainsSpecialCharacters = stringContains(
   $K.REG_EXP.SPECIAL_CHARACTERS
 );
 
+export const stringOnlyContainsAlphabets = stringContains(
+  $K.REG_EXP.ONLY_STRING
+);
+
+export const stringOnlyContainsAlphabetsAndNumbers = stringContains(
+  $K.REG_EXP.ONLY_STRING_AND_NUMBER
+);
+
 export const strLengthIsLessThanOrEqual = (str, length) => str.length <= length;
 export const strLengthIsGreaterThanOrEqual = (str, length) =>
   str.length >= length;
