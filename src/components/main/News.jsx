@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { btnScrollTargetClass } from "./Btns";
-import Constants from "../../modules/data/Constants";
+import $K from "../../modules/data/Constants";
 import { getNews } from "../../modules/api/News";
 
 function News(props) {
@@ -38,7 +38,7 @@ function Article({ id, content }) {
 }
 
 const sectionStyle = {
-  backgroundImage: `url(${Constants.PUBLIC_URL}/img/News.jpg`,
+  backgroundImage: `url(${$K.PUBLIC_URL}/img/News.jpg`,
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
   backgroundPosition: "top left",

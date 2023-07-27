@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Layout from "../components/layout/Layout";
 import { kakaoMapApi } from "../apiKey";
 import { loadScript } from "../modules/utils/ImportExternalScript";
-import Constants from "../modules/data/Constants";
+import $K from "../modules/data/Constants";
 import { KakaoMap } from "../modules/utils/KakaoMap";
 import { contactLocations } from "../modules/data/ContactLocations";
 import { applyMapToObject } from "../modules/utils/ObjectUtils";
@@ -100,7 +100,7 @@ function Contact(props) {
   return (
     <Layout
       name={"Contact"}
-      backgroundImageUrl={`${Constants.PUBLIC_URL}/img/Location.jpg`}
+      backgroundImageUrl={`${$K.PUBLIC_URL}/img/Location.jpg`}
     >
       <ul>{applyMapToObject(contactLocations)(ContactLocationLiElement)}</ul>
       <button
@@ -126,6 +126,6 @@ const kakaoMapApiBaseUrl =
 const kakaoMapApiScriptSrc = kakaoMapApiBaseUrl + kakaoMapApi;
 
 const sendEmailSuccess = () =>
-  toast.success("이메일을 전송했습니다.", Constants.TOAST_POSITION);
+  toast.success("이메일을 전송했습니다.", $K.TOAST_POSITION);
 const sendEmailFail = () =>
-  toast.error("이메일 전송을 실패했습니다.", Constants.TOAST_POSITION);
+  toast.error("이메일 전송을 실패했습니다.", $K.TOAST_POSITION);

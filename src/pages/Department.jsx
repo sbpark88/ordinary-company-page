@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/layout/Layout";
-import Constants from "../modules/data/Constants";
+import $K from "../modules/data/Constants";
 import { getMembers } from "../modules/api/Members";
 function Department(props) {
   const [members, setMembers] = useState([]);
@@ -21,7 +21,7 @@ function Department(props) {
   return (
     <Layout
       name={"Department"}
-      backgroundImageUrl={`${Constants.PUBLIC_URL}/img/Department.jpg`}
+      backgroundImageUrl={`${$K.PUBLIC_URL}/img/Department.jpg`}
     >
       {members.map((member, index) => (
         <MemberProfile
@@ -40,14 +40,8 @@ function MemberProfile({ member, index }) {
   return (
     <article>
       <div className="pic">
-        <img
-          src={`${Constants.PUBLIC_URL}/img/${member.pic}`}
-          alt={member.name}
-        />
-        <img
-          src={`${Constants.PUBLIC_URL}/img/${member.pic}`}
-          alt={member.name}
-        />
+        <img src={`${$K.PUBLIC_URL}/img/${member.pic}`} alt={member.name} />
+        <img src={`${$K.PUBLIC_URL}/img/${member.pic}`} alt={member.name} />
       </div>
       <h2>{member.name}</h2>
       <p>{member.position}</p>

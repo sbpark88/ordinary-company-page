@@ -1,5 +1,5 @@
 import React from "react";
-import Constants from "../../modules/data/Constants";
+import $K from "../../modules/data/Constants";
 import { btnScrollTargetClass } from "./Btns";
 
 function Visual(props) {
@@ -9,12 +9,7 @@ function Visual(props) {
       className={btnScrollTargetClass}
       data-page-name="visual"
     >
-      <video
-        src={`${Constants.PUBLIC_URL}/img/vid.mp4`}
-        muted
-        loop
-        autoPlay
-      ></video>
+      <video src={`${$K.PUBLIC_URL}/img/vid.mp4`} muted loop autoPlay></video>
     </figure>
   );
 }

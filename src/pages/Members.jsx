@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../components/layout/Layout";
-import Constants from "../modules/data/Constants";
+import $K from "../modules/data/Constants";
 import InputText from "../components/form/InputText";
 import InputRadio from "../components/form/InputRadio";
 import InputCheckbox from "../components/form/InputCheckbox";
@@ -38,7 +38,7 @@ function Members(props) {
   return (
     <Layout
       name={"Member"}
-      backgroundImageUrl={`${Constants.PUBLIC_URL}/img/Members.jpg`}
+      backgroundImageUrl={`${$K.PUBLIC_URL}/img/Members.jpg`}
     >
       <form>
         <fieldset>
@@ -161,6 +161,6 @@ const commentTextareaSize = {
 };
 
 const sendRegisterFormSuccess = () =>
-  toast.success("회원 등록을 축하드립니다!", Constants.TOAST_POSITION);
+  toast.success("회원 등록을 축하드립니다!", $K.TOAST_POSITION);
 const sendRegisterFormFail = () =>
-  toast.error("회원 등록에 실패했습니다.", Constants.TOAST_POSITION);
+  toast.error("회원 등록에 실패했습니다.", $K.TOAST_POSITION);
