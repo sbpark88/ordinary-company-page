@@ -18,6 +18,7 @@ const Constants = {
     SPECIAL_CHARACTERS: /[!@#$%^&*()_+]/,
     ONLY_STRING: /^[a-zA-Z]+$/,
     ONLY_STRING_AND_NUMBER: /^[a-zA-Z0-9]+$/,
+    E_MAIL: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
   },
 };
 

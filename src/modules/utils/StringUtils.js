@@ -36,6 +36,8 @@ export const stringOnlyContainsAlphabetsAndNumbers = stringContains(
   $K.REG_EXP.ONLY_STRING_AND_NUMBER
 );
 
+export const stringContainsValidEmail = stringContains($K.REG_EXP.E_MAIL);
+
 export const stringLengthIsLessThanOrEqual = (str, length) =>
   str.length <= length;
 export const stringLengthIsGreaterThanOrEqual = (str, length) =>
