@@ -81,14 +81,20 @@ export const testEmail = (str) =>
     .close("유효한 이메일 주소를 입력해주세요.");
 
 /**
- * 유효한 목록에 포함된 항목인지 검증하는 테스트
+ * 찾으려는 목록이 유효한 목록을 하나 이상 포함하는지 검증하는 테스트
  *
  * @param validList
  * @param retrieving
  * @param errorMessage
  * @returns {*}
  */
-export const testSelectAtLeastOne = (validList, retrieving, errorMessage) =>
-  ValidatorMonad.of(retrieving)
-    .map(() => validList.some((element) => element === retrieving))
+
+export const testSelectAtLeastOne = (validList, retrieving, errorMessage) => {
+  const $retrievingList =
+    retrieving instanceof Array ? retrieving : [retrieving];
+  return ValidatorMonad.of($retrievingList)
+    .map(() =>
+      $retrievingList.some((retrieving) => validList.includes(retrieving))
+    )
     .close(errorMessage);
+};
