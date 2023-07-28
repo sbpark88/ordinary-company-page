@@ -2,7 +2,7 @@ import { test, expect } from "@jest/globals";
 import {
   startWithAlphabet,
   stringOnlyContainsAlphabetsAndNumbers,
-  strLengthIsGreaterThanOrEqual,
+  stringLengthIsGreaterThanOrEqual,
 } from "../../../modules/utils/StringUtils";
 import ValidatorMonad from "../../../modules/common/ValidatorMonad";
 
@@ -17,7 +17,7 @@ const testUserId = (str) =>
   ValidatorMonad.of(str)
     .map(startWithAlphabet)
     .map(stringOnlyContainsAlphabetsAndNumbers)
-    .map((str) => strLengthIsGreaterThanOrEqual(str, 5))
+    .map((str) => stringLengthIsGreaterThanOrEqual(str, 5))
     .close(
       "사용자 아이디는 영문으로 시작하는 영문 또는 숫자를 5자리 이상 입력해주세요."
     );

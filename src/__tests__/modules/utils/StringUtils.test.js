@@ -10,8 +10,8 @@ import {
   stringContainsNumbers,
   stringContainsSpecialCharacters,
   stringIsEmpty,
-  strLengthIsLessThanOrEqual,
-  strLengthIsGreaterThanOrEqual,
+  stringLengthIsLessThanOrEqual,
+  stringLengthIsGreaterThanOrEqual,
   stringOnlyContainsAlphabets,
   stringOnlyContainsAlphabetsAndNumbers,
 } from "../../../modules/utils/StringUtils";
@@ -188,36 +188,36 @@ test("String does not only contains alphabets and numbers", () => {
   ).toBe(false);
 });
 
-// strLengthIsLessThanOrEqual 함수의 테스트
+// stringLengthIsLessThanOrEqual 함수의 테스트
 test("String is shorter than or equal to 10 characters.", () => {
   const length = 10;
 
   const string8 = "abcde123";
   const string10 = "abcde12345";
-  expect(strLengthIsLessThanOrEqual(string8, length)).toBe(true);
-  expect(strLengthIsLessThanOrEqual(string10, length)).toBe(true);
+  expect(stringLengthIsLessThanOrEqual(string8, length)).toBe(true);
+  expect(stringLengthIsLessThanOrEqual(string10, length)).toBe(true);
 });
 
 test("String is not shorter than or equal to 10 characters.", () => {
   const length = 10;
 
   const string11 = "abcde12345F";
-  expect(strLengthIsLessThanOrEqual(string11, length)).toBe(false);
+  expect(stringLengthIsLessThanOrEqual(string11, length)).toBe(false);
 });
 
-// strLengthIsGreaterTHanOrEqual 함수의 테스트
+// stringLengthIsGreaterTHanOrEqual 함수의 테스트
 test("String is longer than or equal to 10 characters.", () => {
   const length = 10;
 
   const string10 = "abcde12345";
   const string11 = "abcde12345F";
-  expect(strLengthIsGreaterThanOrEqual(string10, length)).toBe(true);
-  expect(strLengthIsGreaterThanOrEqual(string11, length)).toBe(true);
+  expect(stringLengthIsGreaterThanOrEqual(string10, length)).toBe(true);
+  expect(stringLengthIsGreaterThanOrEqual(string11, length)).toBe(true);
 });
 
 test("String is not longer than or equal to 10 characters.", () => {
   const length = 10;
 
   const string8 = "abcde123";
-  expect(strLengthIsGreaterThanOrEqual(string8, length)).toBe(false);
+  expect(stringLengthIsGreaterThanOrEqual(string8, length)).toBe(false);
 });

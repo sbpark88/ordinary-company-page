@@ -36,6 +36,7 @@ export const stringOnlyContainsAlphabetsAndNumbers = stringContains(
   $K.REG_EXP.ONLY_STRING_AND_NUMBER
 );
 
-export const strLengthIsLessThanOrEqual = (str, length) => str.length <= length;
-export const strLengthIsGreaterThanOrEqual = (str, length) =>
+export const stringLengthIsLessThanOrEqual = (str, length) =>
+  str.length <= length;
+export const stringLengthIsGreaterThanOrEqual = (str, length) =>
   str.length >= length;

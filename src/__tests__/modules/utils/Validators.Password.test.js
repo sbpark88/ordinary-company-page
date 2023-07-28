@@ -5,11 +5,11 @@ import {
   stringContainsNumbers,
   stringContainsSpecialCharacters,
   stringContainsUpperCases,
-  strLengthIsGreaterThanOrEqual,
+  stringLengthIsGreaterThanOrEqual,
 } from "../../../modules/utils/StringUtils";
 import ValidatorMonad from "../../../modules/common/ValidatorMonad";
 
-const safePassword =
+const isSafePassword =
   (...regExpTestFns) =>
   (str) =>
     regExpTestFns.every((regExpTestFn) => regExpTestFn(str));
@@ -20,7 +20,7 @@ const safePassword =
  *
  * @type {function(*): this is *[]}
  */
-const safePasswordMiddle = safePassword(
+const isSafePasswordMiddle = isSafePassword(
   stringContainsAlphabets,
   stringContainsNumbers,
   stringContainsSpecialCharacters
@@ -28,7 +28,7 @@ const safePasswordMiddle = safePassword(
 
 test("Password contains at least one alphabet, one number, and one special character", () => {
   const validPassword = "p@ssw0rd";
-  expect(safePasswordMiddle(validPassword)).toBe(true);
+  expect(isSafePasswordMiddle(validPassword)).toBe(true);
 });
 
 test("Password does not contain at least one alphabet, one number, and one special character", () => {
@@ -36,17 +36,17 @@ test("Password does not contain at least one alphabet, one number, and one speci
   const invalidPassword2 = "Password"; // No number
   const invalidPassword3 = "Passw0rd"; // No special character
 
-  expect(safePasswordMiddle(invalidPassword1)).toBe(false);
-  expect(safePasswordMiddle(invalidPassword2)).toBe(false);
-  expect(safePasswordMiddle(invalidPassword3)).toBe(false);
+  expect(isSafePasswordMiddle(invalidPassword1)).toBe(false);
+  expect(isSafePasswordMiddle(invalidPassword2)).toBe(false);
+  expect(isSafePasswordMiddle(invalidPassword3)).toBe(false);
 });
 
 test("Password is undefined or null.", () => {
   const invalidPassword1 = undefined;
   const invalidPassword2 = null;
 
-  expect(safePasswordMiddle(invalidPassword1)).toBe(false);
-  expect(safePasswordMiddle(invalidPassword2)).toBe(false);
+  expect(isSafePasswordMiddle(invalidPassword1)).toBe(false);
+  expect(isSafePasswordMiddle(invalidPassword2)).toBe(false);
 });
 
 /**
@@ -55,7 +55,7 @@ test("Password is undefined or null.", () => {
  *
  * @type {function(*): this is *[]}
  */
-const safePasswordHard = safePassword(
+const isSafePasswordHard = isSafePassword(
   stringContainsLowerCases,
   stringContainsUpperCases,
   stringContainsNumbers,
@@ -64,7 +64,7 @@ const safePasswordHard = safePassword(
 
 test("Password contains at least one lowercase alphabet, one uppercase alphabet, one number, and one special character", () => {
   const validPassword = "p@ssW0rd";
-  expect(safePasswordHard(validPassword)).toBe(true);
+  expect(isSafePasswordHard(validPassword)).toBe(true);
 });
 
 test("Password does not contain at least one lowercase alphabet, one uppercase alphabet, one number, and one special character", () => {
@@ -73,10 +73,10 @@ test("Password does not contain at least one lowercase alphabet, one uppercase a
   const invalidPassword3 = "P@SSWord"; // No number
   const invalidPassword4 = "PaSsW0rd"; // No special character
 
-  expect(safePasswordHard(invalidPassword1)).toBe(false);
-  expect(safePasswordHard(invalidPassword2)).toBe(false);
-  expect(safePasswordHard(invalidPassword4)).toBe(false);
-  expect(safePasswordHard(invalidPassword3)).toBe(false);
+  expect(isSafePasswordHard(invalidPassword1)).toBe(false);
+  expect(isSafePasswordHard(invalidPassword2)).toBe(false);
+  expect(isSafePasswordHard(invalidPassword4)).toBe(false);
+  expect(isSafePasswordHard(invalidPassword3)).toBe(false);
 });
 
 /**
@@ -87,8 +87,8 @@ test("Password does not contain at least one lowercase alphabet, one uppercase a
  */
 const testPassword = (str) =>
   ValidatorMonad.of(str)
-    .map((str) => strLengthIsGreaterThanOrEqual(str, 8))
-    .map(safePasswordMiddle)
+    .map((str) => stringLengthIsGreaterThanOrEqual(str, 8))
+    .map(isSafePasswordMiddle)
     .close("영문, 숫자, 특수문자를 모두 포함해 8자리 이상 입력해주세요.");
 
 test("Password is long enough and safe.", () => {
