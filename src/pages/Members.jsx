@@ -8,6 +8,14 @@ import Select from "../components/form/Select";
 import Textarea from "../components/form/Textarea";
 import { toast } from "react-toastify";
 import { throttle } from "../modules/utils/Performance";
+import {
+  testEmail,
+  testPassword,
+  testSelectAtLeastOne,
+  testUserId,
+} from "../modules/utils/Validators";
+import ValidatorMonad from "../modules/common/ValidatorMonad";
+import { stringLengthIsGreaterThanOrEqual } from "../modules/utils/StringUtils";
 
 function Members(props) {
   const [registerForm, setRegisterForm] = useState(initialRegisterFormState);
@@ -15,23 +23,115 @@ function Members(props) {
   const setProperty = (property) => (value) =>
     setRegisterForm({ ...registerForm, [property]: value });
 
-  const [errorMessage, setErrorMessage] = useState({
-    userId: "",
-    password: "",
-    rePassword: "",
-    email: "",
-    gender: "",
-    interest: "",
-    education: "",
-    comment: "",
-  });
+  const [errorMessage, setErrorMessage] = useState(initialErrorMessageState);
 
-  const handleReset = (event) => setRegisterForm(initialRegisterFormState);
+  const testValidation = () => {
+    let $errorMessage = { ...initialErrorMessageState };
+
+    // User Id
+    const userIdValidatorMonad = testUserId(registerForm.userId);
+    $errorMessage = collectErrorMessage(
+      $errorMessage,
+      "userId",
+      userIdValidatorMonad
+    );
+
+    // Password
+    const passwordValidatorMonad =
+      registerForm.password === registerForm.rePassword
+        ? testPassword(registerForm.password)
+        : ValidatorMonad.invalid.close("비밀번호가 다릅니다.");
+    $errorMessage = collectErrorMessage(
+      $errorMessage,
+      "password",
+      passwordValidatorMonad
+    );
+
+    // Email
+    const emailValidatorMonad = testEmail(registerForm.email);
+    $errorMessage = collectErrorMessage(
+      $errorMessage,
+      "email",
+      emailValidatorMonad
+    );
+
+    // Gender
+    const genderValidatorMonad = testSelectAtLeastOne(
+      genderProperties,
+      registerForm.gender,
+      "성별을 선택해주세요."
+    );
+    $errorMessage = collectErrorMessage(
+      $errorMessage,
+      "gender",
+      genderValidatorMonad
+    );
+
+    // Interest
+    const interestValidatorMonad = testSelectAtLeastOne(
+      interestProperties,
+      registerForm.interest,
+      "관심사를 하나 이상 선택해주세요."
+    );
+    $errorMessage = collectErrorMessage(
+      $errorMessage,
+      "interest",
+      interestValidatorMonad
+    );
+
+    // Education
+    const educationValidatorMonad = testSelectAtLeastOne(
+      educationPropertiesWithName
+        .flatMap((tuple) => tuple[0])
+        .filter((value) => value !== ""),
+      registerForm.education,
+      "최종 학력을 선택해주세요."
+    );
+    $errorMessage = collectErrorMessage(
+      $errorMessage,
+      "education",
+      educationValidatorMonad
+    );
+
+    // Comment_
+    const commentValidatorMonad = stringLengthIsGreaterThanOrEqual(
+      registerForm.comment,
+      10
+    )
+      ? ValidatorMonad.valid(registerForm.comment)
+      : ValidatorMonad.invalid.close("코멘트를 10자 이상 입력해주세요.");
+    $errorMessage = collectErrorMessage(
+      $errorMessage,
+      "comment",
+      commentValidatorMonad
+    );
+
+    // Update error message and return
+    setErrorMessage($errorMessage);
+
+    return [
+      userIdValidatorMonad,
+      passwordValidatorMonad,
+      emailValidatorMonad,
+      genderValidatorMonad,
+      interestValidatorMonad,
+      educationValidatorMonad,
+      commentValidatorMonad,
+    ].every((monad) => monad.status);
+  };
+
+  const handleReset = () => setRegisterForm(initialRegisterFormState);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    sendRegisterFormSuccess();
-    handleReset();
+    if (testValidation()) {
+      if (Math.random() <= 1) {
+        sendRegisterFormSuccess();
+      } else {
+        sendRegisterFormFail();
+      }
+      handleReset();
+    }
   };
   const throttledHandleSubmit = throttle(handleSubmit, 3000);
 
@@ -146,6 +246,16 @@ const initialRegisterFormState = {
   education: "",
   comment: "",
 };
+const initialErrorMessageState = {
+  userId: "",
+  password: "",
+  rePassword: "",
+  email: "",
+  gender: "",
+  interest: "",
+  education: "",
+  comment: "",
+};
 const genderProperties = ["male", "female"];
 const interestProperties = ["sports", "music", "game"];
 const educationPropertiesWithName = [
@@ -164,3 +274,17 @@ const sendRegisterFormSuccess = () =>
   toast.success("회원 등록을 축하드립니다!", $K.TOAST_POSITION);
 const sendRegisterFormFail = () =>
   toast.error("회원 등록에 실패했습니다.", $K.TOAST_POSITION);
+
+const collectErrorMessage = ($errorMessage, property, validatorMonad) => {
+  if (validatorMonad.status) {
+    return {
+      ...$errorMessage,
+      [property]: "",
+    };
+  } else {
+    return {
+      ...$errorMessage,
+      [property]: validatorMonad.errorMessage,
+    };
+  }
+};
