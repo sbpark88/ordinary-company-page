@@ -29,6 +29,9 @@ const testUserId = (str) =>
     );
 
 describe("UserId validation test", () => {
+  const errorMessage =
+    "사용자 아이디는 영문으로 시작하는 영문 또는 숫자를 5자리 이상 입력해주세요.";
+
   test("UserId only contains alphabets is valid.", () => {
     const validUserId = "afzFsbf";
 
@@ -48,9 +51,7 @@ describe("UserId validation test", () => {
 
     const validation = testUserId(invalidUserId);
     expect(validation.status).toBe(false);
-    expect(validation.errorMessage).toBe(
-      "사용자 아이디는 영문으로 시작하는 영문 또는 숫자를 5자리 이상 입력해주세요."
-    );
+    expect(validation.errorMessage).toBe(errorMessage);
   });
 
   test("UserId is too short.", () => {
@@ -58,9 +59,7 @@ describe("UserId validation test", () => {
 
     const validation = testUserId(invalidUserId);
     expect(validation.status).toBe(false);
-    expect(validation.errorMessage).toBe(
-      "사용자 아이디는 영문으로 시작하는 영문 또는 숫자를 5자리 이상 입력해주세요."
-    );
+    expect(validation.errorMessage).toBe(errorMessage);
   });
 });
 
@@ -151,6 +150,9 @@ const testPassword = (str) =>
     .close("영문, 숫자, 특수문자를 모두 포함해 8자리 이상 입력해주세요.");
 
 describe("Password validation test", () => {
+  const errorMessage =
+    "영문, 숫자, 특수문자를 모두 포함해 8자리 이상 입력해주세요.";
+
   test("Password is long enough and safe.", () => {
     const validPassword = "p@ssw0rd";
 
@@ -163,9 +165,7 @@ describe("Password validation test", () => {
 
     const validation = testPassword(invalidPassword);
     expect(validation.status).toBe(false);
-    expect(validation.errorMessage).toBe(
-      "영문, 숫자, 특수문자를 모두 포함해 8자리 이상 입력해주세요."
-    );
+    expect(validation.errorMessage).toBe(errorMessage);
   });
 
   test("Password is not long", () => {
@@ -173,9 +173,7 @@ describe("Password validation test", () => {
 
     const validation = testPassword(invalidPassword);
     expect(validation.status).toBe(false);
-    expect(validation.errorMessage).toBe(
-      "영문, 숫자, 특수문자를 모두 포함해 8자리 이상 입력해주세요."
-    );
+    expect(validation.errorMessage).toBe(errorMessage);
   });
 });
 
@@ -190,7 +188,9 @@ const testEmail = (str) =>
     .map(stringContainsValidEmail)
     .close("유효한 이메일 주소를 입력해주세요.");
 
-describe("Email Validation", () => {
+describe("Email validation test", () => {
+  const errorMessage = "유효한 이메일 주소를 입력해주세요.";
+
   test("Valid email addresses", () => {
     const validEmail1 = "test@example.com";
     const validEmail2 = "john.doe+test@gmail.com";
@@ -207,7 +207,6 @@ describe("Email Validation", () => {
 
   test("Invalid email addresses - no @", () => {
     const invalidEmail = "invalid.com";
-    const errorMessage = "유효한 이메일 주소를 입력해주세요.";
 
     const validation = testEmail(invalidEmail);
 
@@ -217,7 +216,6 @@ describe("Email Validation", () => {
 
   test("Invalid email addresses - no domain", () => {
     const invalidEmail = "invalid.email@";
-    const errorMessage = "유효한 이메일 주소를 입력해주세요.";
 
     const validation = testEmail(invalidEmail);
 
@@ -227,10 +225,68 @@ describe("Email Validation", () => {
 
   test("Invalid email addresses - no local", () => {
     const invalidEmail = "@invalid.com";
-    const errorMessage = "유효한 이메일 주소를 입력해주세요.";
 
     const validation = testEmail(invalidEmail);
 
+    expect(validation.status).toBe(false);
+    expect(validation.errorMessage).toBe(errorMessage);
+  });
+});
+
+/**
+ * 유효한 목록에 포함된 항목인지 검증하는 테스트
+ *
+ * @param validList
+ * @param retrieving
+ * @param errorMessage
+ * @returns {*}
+ */
+const testSelectAtLeastOne = (validList, retrieving, errorMessage) =>
+  ValidatorMonad.of(retrieving)
+    .map(() => validList.some((element) => element === retrieving))
+    .close(errorMessage);
+
+describe("Valid retrieving target test", () => {
+  const validList = [
+    "마카다미아",
+    "피스타치오",
+    "아몬드",
+    "캐슈넛",
+    "브라질넛",
+  ];
+  const errorMessage = "견과류를 하나 이상 선택해주세요.";
+
+  test("아몬드 is valid element of 'validList'.", () => {
+    const retrieving = "아몬드";
+
+    const validation = testSelectAtLeastOne(
+      validList,
+      retrieving,
+      errorMessage
+    );
+    expect(validation.status).toBe(true);
+  });
+
+  test("호두 is invalid element of 'validList'.", () => {
+    const retrieving = "호두";
+
+    const validation = testSelectAtLeastOne(
+      validList,
+      retrieving,
+      errorMessage
+    );
+    expect(validation.status).toBe(false);
+    expect(validation.errorMessage).toBe(errorMessage);
+  });
+
+  test("호두 is invalid element of 'validList'.", () => {
+    const retrieving = "호두";
+
+    const validation = testSelectAtLeastOne(
+      validList,
+      retrieving,
+      errorMessage
+    );
     expect(validation.status).toBe(false);
     expect(validation.errorMessage).toBe(errorMessage);
   });
