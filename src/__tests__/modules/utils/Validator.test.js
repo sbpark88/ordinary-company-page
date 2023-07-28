@@ -234,17 +234,23 @@ describe("Email validation test", () => {
 });
 
 /**
- * 유효한 목록에 포함된 항목인지 검증하는 테스트
+ * 찾으려는 목록이 유효한 목록을 하나 이상 포함하는지 검증하는 테스트
  *
  * @param validList
  * @param retrieving
  * @param errorMessage
  * @returns {*}
  */
-const testSelectAtLeastOne = (validList, retrieving, errorMessage) =>
-  ValidatorMonad.of(retrieving)
-    .map(() => validList.some((element) => element === retrieving))
+
+const testSelectAtLeastOne = (validList, retrieving, errorMessage) => {
+  const $retrievingList =
+    retrieving instanceof Array ? retrieving : [retrieving];
+  return ValidatorMonad.of($retrievingList)
+    .map(() =>
+      $retrievingList.some((retrieving) => validList.includes(retrieving))
+    )
     .close(errorMessage);
+};
 
 describe("Valid retrieving target test", () => {
   const validList = [
@@ -257,37 +263,61 @@ describe("Valid retrieving target test", () => {
   const errorMessage = "견과류를 하나 이상 선택해주세요.";
 
   test("아몬드 is valid element of 'validList'.", () => {
-    const retrieving = "아몬드";
+    const retrievingList = ["아몬드"];
 
     const validation = testSelectAtLeastOne(
       validList,
-      retrieving,
+      retrievingList,
       errorMessage
     );
-    expect(validation.status).toBe(true);
+    expect(validation.status).toEqual(true);
+  });
+
+  test("아몬드, 피스타치오 are valid element of 'validList'.", () => {
+    const retrievingList = ["아몬드", "피스타치오"];
+
+    const validation = testSelectAtLeastOne(
+      validList,
+      retrievingList,
+      errorMessage
+    );
+    expect(validation.status).toEqual(true);
   });
 
   test("호두 is invalid element of 'validList'.", () => {
-    const retrieving = "호두";
+    const retrievingList = ["호두"];
 
     const validation = testSelectAtLeastOne(
       validList,
-      retrieving,
+      retrievingList,
       errorMessage
     );
-    expect(validation.status).toBe(false);
-    expect(validation.errorMessage).toBe(errorMessage);
+    expect(validation.status).toEqual(false);
+    expect(validation.errorMessage).toEqual(errorMessage);
   });
 
-  test("호두 is invalid element of 'validList'.", () => {
-    const retrieving = "호두";
+  // 기존 함수를 사용하는 메서드와의 호환을 위해 Array 로 wrapping 되어 있지 않으면 wrapping 시킨다.
+  test("호두 is invalid element of 'validList'. - unwrapped by array", () => {
+    const retrievingList = "호두";
 
     const validation = testSelectAtLeastOne(
       validList,
-      retrieving,
+      retrievingList,
       errorMessage
     );
-    expect(validation.status).toBe(false);
-    expect(validation.errorMessage).toBe(errorMessage);
+    expect(validation.status).toEqual(false);
+    expect(validation.errorMessage).toEqual(errorMessage);
+  });
+
+  test("Empty list also return false.", () => {
+    const retrievingList = [];
+
+    const validation = testSelectAtLeastOne(
+      validList,
+      retrievingList,
+      errorMessage
+    );
+    expect(validation.status).toEqual(false);
+    expect(validation.errorMessage).toEqual(errorMessage);
   });
 });
