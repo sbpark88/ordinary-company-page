@@ -1,6 +1,6 @@
-import { debounce } from "../../modules/utils/Performance";
+import React from "react";
 
-export default function Textarea({
+const Textarea = ({
   label,
   name,
   data,
@@ -8,14 +8,12 @@ export default function Textarea({
   size,
   placeholder,
   errorMessage,
-}) {
+}) => {
   const handleChange = (event) => {
     event.stopPropagation();
     const { value } = event.target;
     setData(value);
   };
-
-  const debouncedHandleChange = debounce(handleChange);
 
   return (
     <tr>
@@ -26,18 +24,19 @@ export default function Textarea({
         <textarea
           name={name}
           id={name}
-          defaultValue={data}
+          value={data}
           cols={size.cols}
           rows={size.rows}
           placeholder={placeholder}
-          onChange={debouncedHandleChange}
+          onChange={handleChange}
           style={style}
         />
         {errorMessage && <p className="error-message">{errorMessage}</p>}
       </td>
     </tr>
   );
-}
+};
+export default React.memo(Textarea);
 
 const style = {
   resize: "none",

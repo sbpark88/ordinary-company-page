@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Layout from "../components/layout/Layout";
 import $K from "../modules/data/Constants";
 import InputText from "../components/form/InputText";
+import InputPassword from "../components/form/InputPassword";
 import InputRadio from "../components/form/InputRadio";
 import InputCheckbox from "../components/form/InputCheckbox";
 import Select from "../components/form/Select";
@@ -25,7 +26,7 @@ function Members(props) {
 
   const [errorMessage, setErrorMessage] = useState(initialErrorMessageState);
 
-  const testValidation = () => {
+  const testValidation = useCallback(() => {
     let $errorMessage = { ...initialErrorMessageState };
 
     // User Id
@@ -37,13 +38,13 @@ function Members(props) {
     );
 
     // Password
-    const passwordValidatorMonad =
-      registerForm.password === registerForm.rePassword
-        ? testPassword(registerForm.password)
-        : ValidatorMonad.invalid.close("비밀번호가 다릅니다.");
+    const samePassword = registerForm.password === registerForm.rePassword;
+    const passwordValidatorMonad = samePassword
+      ? testPassword(registerForm.password)
+      : ValidatorMonad.invalid.close("비밀번호가 다릅니다.");
     $errorMessage = collectErrorMessage(
       $errorMessage,
-      "password",
+      samePassword ? "password" : "rePassword",
       passwordValidatorMonad
     );
 
@@ -118,7 +119,7 @@ function Members(props) {
       educationValidatorMonad,
       commentValidatorMonad,
     ].every((monad) => monad.status);
-  };
+  }, [registerForm]);
 
   const handleReset = () => setRegisterForm(initialRegisterFormState);
 
@@ -127,10 +128,10 @@ function Members(props) {
     if (testValidation()) {
       if (Math.random() <= 1) {
         sendRegisterFormSuccess();
+        handleReset();
       } else {
         sendRegisterFormFail();
       }
-      handleReset();
     }
   };
   const throttledHandleSubmit = throttle(handleSubmit, 3000);
@@ -153,7 +154,7 @@ function Members(props) {
                 placeholder="아이디를 입력하세요."
                 errorMessage={errorMessage.userId}
               />
-              <InputText
+              <InputPassword
                 label="PASSWORD"
                 name="password"
                 data={registerForm.password}
@@ -161,7 +162,7 @@ function Members(props) {
                 placeholder="비밀번호를 입력하세요."
                 errorMessage={errorMessage.password}
               />
-              <InputText
+              <InputPassword
                 label="RE-PASSWORD"
                 name="rePassword"
                 data={registerForm.rePassword}

@@ -1,13 +1,12 @@
 import React from "react";
-
-export default function Select({
+const Select = ({
   label,
   name,
   data,
   setData,
   propertiesWithName,
   errorMessage,
-}) {
+}) => {
   const handleChange = (event) => {
     event.stopPropagation();
     const { value } = event.target;
@@ -33,8 +32,10 @@ export default function Select({
       </td>
     </tr>
   );
-}
+};
 
 function Option({ property, propertyName }) {
   return <option value={property}>{propertyName}</option>;
 }
+
+export default React.memo(Select);

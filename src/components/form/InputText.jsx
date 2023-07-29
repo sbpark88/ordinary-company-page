@@ -1,20 +1,18 @@
-import { debounce } from "../../modules/utils/Performance";
+import React from "react";
 
-export default function InputText({
+const InputText = ({
   label,
   name,
   data,
   setData,
   placeholder,
   errorMessage,
-}) {
+}) => {
   const handleChange = (event) => {
     event.stopPropagation();
     const { value } = event.target;
     setData(value);
   };
-
-  const debouncedHandleChange = debounce(handleChange);
 
   return (
     <tr>
@@ -26,12 +24,14 @@ export default function InputText({
           type="text"
           name={name}
           id={name}
-          defaultValue={data}
+          value={data}
           placeholder={placeholder}
-          onChange={debouncedHandleChange}
+          onChange={handleChange}
         />
         {errorMessage && <p className="error-message">{errorMessage}</p>}
       </td>
     </tr>
   );
-}
+};
+
+export default React.memo(InputText);

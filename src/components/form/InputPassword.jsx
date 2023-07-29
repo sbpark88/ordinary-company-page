@@ -1,21 +1,18 @@
-import { debounce } from "../../modules/utils/Performance";
+import React from "react";
 
-export default function InputPassword({
+const InputPassword = ({
   label,
   name,
   data,
   setData,
   placeholder,
   errorMessage,
-}) {
+}) => {
   const handleChange = (event) => {
     event.stopPropagation();
     const { value } = event.target;
     setData(value);
   };
-
-  const debouncedHandleChange = debounce(handleChange);
-
   return (
     <tr>
       <th>
@@ -26,12 +23,14 @@ export default function InputPassword({
           type="password"
           name={name}
           id={name}
-          defaultValue={data}
+          value={data}
           placeholder={placeholder}
-          onChange={debouncedHandleChange}
+          onChange={handleChange}
         />
         {errorMessage && <p className="error-message">{errorMessage}</p>}
       </td>
     </tr>
   );
-}
+};
+
+export default React.memo(InputPassword);
