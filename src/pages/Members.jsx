@@ -18,7 +18,7 @@ import {
 import ValidatorMonad from "../modules/common/ValidatorMonad";
 import { stringLengthIsGreaterThanOrEqual } from "../modules/utils/StringUtils";
 
-function Members(props) {
+function Members() {
   const [registerForm, setRegisterForm] = useState(initialRegisterFormState);
 
   const setProperty = (property) => (value) =>
