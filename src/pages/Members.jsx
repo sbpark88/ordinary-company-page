@@ -121,7 +121,10 @@ function Members(props) {
     ].every((monad) => monad.status);
   }, [registerForm]);
 
-  const handleReset = () => setRegisterForm(initialRegisterFormState);
+  const handleReset = () => {
+    setRegisterForm(initialRegisterFormState);
+    setErrorMessage(initialErrorMessageState);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
