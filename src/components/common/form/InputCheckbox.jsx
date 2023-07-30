@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 
 const InputCheckbox = ({
   label,
@@ -28,13 +28,18 @@ const InputCheckbox = ({
 };
 
 function Checkbox({ name, data, property, setData }) {
-  const handleChange = (event) => {
-    event.stopPropagation();
-    const { value, checked } = event.target;
-    setData(
-      checked ? [...new Set([...data, value])] : data.filter((v) => v !== value)
-    );
-  };
+  const handleChange = useCallback(
+    (event) => {
+      event.stopPropagation();
+      const { value, checked } = event.target;
+      setData(
+        checked
+          ? [...new Set([...data, value])]
+          : data.filter((v) => v !== value)
+      );
+    },
+    [data, setData]
+  );
 
   return (
     <>

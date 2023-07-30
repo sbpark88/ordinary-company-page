@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 
 const InputRadio = ({
   label,
@@ -28,11 +28,11 @@ const InputRadio = ({
 };
 
 function Radio({ name, data, property, setData }) {
-  const handleChange = (event) => {
+  const handleChange = useCallback((event) => {
     event.stopPropagation();
     const { value } = event.target;
     setData(value);
-  };
+  });
 
   return (
     <>

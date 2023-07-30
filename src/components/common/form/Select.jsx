@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 
 const Select = ({
   label,
@@ -8,11 +8,11 @@ const Select = ({
   propertiesWithName,
   errorMessage,
 }) => {
-  const handleChange = (event) => {
+  const handleChange = useCallback((event) => {
     event.stopPropagation();
     const { value } = event.target;
     setData(value);
-  };
+  });
 
   return (
     <tr>
