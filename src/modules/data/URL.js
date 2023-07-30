@@ -13,11 +13,11 @@ const OpenApiURL = {
 };
 
 const MembersURL = {
-  get: "/DB/members.json",
+  get: "/member",
 };
 
 const NewsURL = {
-  get: "/DB/news.json",
+  get: "/news",
 };
 
 const objToUrlParams = (object) => {
