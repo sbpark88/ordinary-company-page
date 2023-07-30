@@ -21,7 +21,7 @@ function Members() {
   const [registerForm, setRegisterForm] = useState(initialRegisterFormState);
 
   const setProperty = (property) => (value) =>
-    setRegisterForm({ ...registerForm, [property]: value });
+    setRegisterForm((prevState) => ({ ...prevState, [property]: value }));
 
   const [errorMessage, setErrorMessage] = useState(initialErrorMessageState);
 
@@ -284,10 +284,7 @@ const sendRegisterFormFail = () =>
 
 const collectErrorMessage = ($errorMessage, property, validatorMonad) => {
   if (validatorMonad.status) {
-    return {
-      ...$errorMessage,
-      [property]: "",
-    };
+    return $errorMessage;
   } else {
     return {
       ...$errorMessage,
