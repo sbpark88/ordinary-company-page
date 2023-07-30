@@ -2,7 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import Layout from "../components/layout/Layout";
 import axios from "axios";
 import { objToUrlParams, OpenApiURL } from "../modules/data/URL";
-import { dropLongString } from "../modules/utils/StringUtils";
+import {
+  convertTimeIso8601toKoreanYearMonthDay,
+  dropLongString,
+} from "../modules/utils/StringUtils";
 import Modal from "../components/layout/Modal";
 import $K from "../modules/data/Constants";
 
@@ -43,49 +46,16 @@ function Youtube(props) {
         {vids.map((vid) => (
           <VideoCard
             key={vid?.id}
-            {...generateProps(vid, modal, setSelectedId)}
+            {...generatePropsForVideoCard(vid, modal, setSelectedId)}
           />
         ))}
       </Layout>
-      <Modal ref={modal}>{selectedId && youtubeIframe(vids, selectedId)}</Modal>
+      <Modal ref={modal}>{selectedId && YoutubeIframe(vids, selectedId)}</Modal>
     </>
   );
 }
 
-// Generate props for Layout
-const generateProps = (vid, modal, setSelectedId) => {
-  return {
-    id: vid?.id,
-    url: vid?.snippet.thumbnails.standard.url,
-    title: dropLongString(vid?.snippet.title, 50),
-    description: dropLongString(vid?.snippet.description, 200),
-    publishedAt: dateFormatWithDot(vid?.snippet.publishedAt),
-    modal: modal,
-    setSelectedId: setSelectedId,
-  };
-};
-
-// 2023-07-09T00:22:29Z 형식을 받아 2023.07.09 로 반환
-const dateFormatWithDot = (str) => {
-  return str.split("T")[0].replaceAll("-", ".");
-};
-
-const youtubeIframe = (vids, selectedId) => {
-  if (vids === undefined || selectedId === undefined) return null;
-
-  const match = vids.filter((vid) => vid?.id === selectedId)[0];
-  if (match === null || match === undefined) return null;
-
-  const title = match.snippet.title;
-  const videoId = match.snippet.resourceId.videoId;
-
-  return (
-    <iframe
-      title={title}
-      src={`https://www.youtube.com/embed/${videoId}`}
-    ></iframe>
-  );
-};
+export default Youtube;
 
 function VideoCard(props) {
   const { id, url, title, description, publishedAt, modal, setSelectedId } =
@@ -121,4 +91,34 @@ function VideoCard(props) {
   );
 }
 
-export default Youtube;
+// Generate props for Layout
+const generatePropsForVideoCard = (vid, modal, setSelectedId) => {
+  return {
+    id: vid?.id,
+    url: vid?.snippet.thumbnails.standard.url,
+    title: dropLongString(vid?.snippet.title, 50),
+    description: dropLongString(vid?.snippet.description, 200),
+    publishedAt: convertTimeIso8601toKoreanYearMonthDay(
+      vid?.snippet.publishedAt
+    ),
+    modal: modal,
+    setSelectedId: setSelectedId,
+  };
+};
+
+function YoutubeIframe(vids, selectedId) {
+  if (vids === undefined || selectedId === undefined) return null;
+
+  const match = vids.filter((vid) => vid?.id === selectedId)[0];
+  if (match === null || match === undefined) return null;
+
+  const title = match.snippet.title;
+  const videoId = match.snippet.resourceId.videoId;
+
+  return (
+    <iframe
+      title={title}
+      src={`https://www.youtube.com/embed/${videoId}`}
+    ></iframe>
+  );
+}

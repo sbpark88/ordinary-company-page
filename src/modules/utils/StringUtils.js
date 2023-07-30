@@ -42,3 +42,7 @@ export const stringLengthIsLessThanOrEqual = (str, length) =>
   str.length <= length;
 export const stringLengthIsGreaterThanOrEqual = (str, length) =>
   str.length >= length;
+
+// 2023-07-09T00:22:29Z 형식을 받아 2023.07.09 로 반환
+export const convertTimeIso8601toKoreanYearMonthDay = (iso8601) =>
+  iso8601.split("T")[0].replaceAll("-", ".");
