@@ -1,4 +1,5 @@
-import React from "react";
+import { memo } from "react";
+
 const InputCheckbox = ({
   label,
   name,
@@ -50,4 +51,4 @@ function Checkbox({ name, data, property, setData }) {
   );
 }
 
-export default React.memo(InputCheckbox);
+export default memo(InputCheckbox);

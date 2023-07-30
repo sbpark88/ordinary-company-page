@@ -1,4 +1,5 @@
-import React from "react";
+import { memo } from "react";
+
 const InputRadio = ({
   label,
   name,
@@ -48,4 +49,4 @@ function Radio({ name, data, property, setData }) {
   );
 }
 
-export default React.memo(InputRadio);
+export default memo(InputRadio);

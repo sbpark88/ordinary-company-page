@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from "react";
 import Layout from "../components/layout/Layout";
 import $K from "../modules/data/Constants";
-import InputText from "../components/form/InputText";
-import InputPassword from "../components/form/InputPassword";
-import InputRadio from "../components/form/InputRadio";
-import InputCheckbox from "../components/form/InputCheckbox";
-import Select from "../components/form/Select";
-import Textarea from "../components/form/Textarea";
+import InputText from "../components/common/form/InputText";
+import InputPassword from "../components/common/form/InputPassword";
+import InputRadio from "../components/common/form/InputRadio";
+import InputCheckbox from "../components/common/form/InputCheckbox";
+import Select from "../components/common/form/Select";
+import Textarea from "../components/common/form/Textarea";
 import { toast } from "react-toastify";
 import { throttle } from "../modules/utils/Performance";
 import {

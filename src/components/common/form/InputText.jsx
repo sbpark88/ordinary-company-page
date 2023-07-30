@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 
 const InputText = ({
   label,
@@ -34,4 +34,4 @@ const InputText = ({
   );
 };
 
-export default React.memo(InputText);
+export default memo(InputText);

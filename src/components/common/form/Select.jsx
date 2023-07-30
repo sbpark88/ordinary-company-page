@@ -1,4 +1,5 @@
-import React from "react";
+import { memo } from "react";
+
 const Select = ({
   label,
   name,
@@ -38,4 +39,4 @@ function Option({ property, propertyName }) {
   return <option value={property}>{propertyName}</option>;
 }
 
-export default React.memo(Select);
+export default memo(Select);

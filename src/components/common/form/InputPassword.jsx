@@ -1,11 +1,10 @@
-import React from "react";
+import { memo } from "react";
 
-const Textarea = ({
+const InputPassword = ({
   label,
   name,
   data,
   setData,
-  size,
   placeholder,
   errorMessage,
 }) => {
@@ -14,30 +13,24 @@ const Textarea = ({
     const { value } = event.target;
     setData(value);
   };
-
   return (
     <tr>
       <th>
         <label htmlFor={name}>{label}</label>
       </th>
       <td>
-        <textarea
+        <input
+          type="password"
           name={name}
           id={name}
           value={data}
-          cols={size.cols}
-          rows={size.rows}
           placeholder={placeholder}
           onChange={handleChange}
-          style={style}
         />
         {errorMessage && <p className="error-message">{errorMessage}</p>}
       </td>
     </tr>
   );
 };
-export default React.memo(Textarea);
 
-const style = {
-  resize: "none",
-};
+export default memo(InputPassword);
