@@ -1,6 +1,6 @@
 import { memo, useCallback } from "react";
 
-const Textarea = ({
+const FormTextarea = ({
   label,
   name,
   data,
@@ -36,7 +36,7 @@ const Textarea = ({
     </tr>
   );
 };
-export default memo(Textarea);
+export default memo(FormTextarea);
 
 const style = {
   resize: "none",

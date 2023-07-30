@@ -1,6 +1,6 @@
 import { memo, useCallback } from "react";
 
-const Select = ({
+const FormSelect = ({
   label,
   name,
   data,
@@ -39,4 +39,4 @@ function Option({ property, propertyName }) {
   return <option value={property}>{propertyName}</option>;
 }
 
-export default memo(Select);
+export default memo(FormSelect);

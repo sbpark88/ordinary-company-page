@@ -24,4 +24,11 @@ class ValidationError extends Error {
   }
 }
 
-export { HTTPError, ValidationError };
+class CustomFormError extends Error {
+  constructor(message) {
+    super(`Custom Form Error: ${message}`);
+    this.message = message;
+  }
+}
+
+export { HTTPError, ValidationError, CustomFormError };

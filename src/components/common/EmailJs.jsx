@@ -6,6 +6,8 @@ import { stringIsEmpty } from "../../modules/utils/StringUtils";
 import { toast } from "react-toastify";
 import $K from "../../modules/data/Constants";
 import { throttle } from "../../modules/utils/Performance";
+import Input from "./Input";
+import Textarea from "./Textarea";
 
 function EmailJs({ sendEmailSuccess, sendEmailFail }) {
   const form = useRef();
@@ -39,19 +41,13 @@ function EmailJs({ sendEmailSuccess, sendEmailFail }) {
 
   return (
     <form className="emailjs" ref={form} onSubmit={throttledSendEmail}>
-      <div>
-        <label>Name</label>
-        <input type="text" name="user_name" />
-      </div>
-      <div>
-        <label>Email</label>
-        <input type="email" name="user_email" />
-      </div>
-      <div>
-        <label>Message</label>
-        <textarea name="message" />
-        <input type="submit" value="Send" />
-      </div>
+      <Input label="Name" type="text" name="user_name" />
+      <Input label="Email" type="email" name="user_name" />
+      <Textarea
+        label="Message"
+        name="message"
+        sibling={<input type="submit" value="Send" />}
+      />
     </form>
   );
 }

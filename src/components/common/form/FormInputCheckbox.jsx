@@ -1,6 +1,6 @@
 import { memo, useCallback } from "react";
 
-const InputRadio = ({
+const FormInputCheckbox = ({
   label,
   name,
   data,
@@ -13,7 +13,7 @@ const InputRadio = ({
       <th>{label}</th>
       <td>
         {properties?.map((property) => (
-          <Radio
+          <Checkbox
             key={property}
             name={name}
             data={data}
@@ -27,26 +27,33 @@ const InputRadio = ({
   );
 };
 
-function Radio({ name, data, property, setData }) {
-  const handleChange = useCallback((event) => {
-    event.stopPropagation();
-    const { value } = event.target;
-    setData(value);
-  });
+function Checkbox({ name, data, property, setData }) {
+  const handleChange = useCallback(
+    (event) => {
+      event.stopPropagation();
+      const { value, checked } = event.target;
+      setData(
+        checked
+          ? [...new Set([...data, value])]
+          : data.filter((v) => v !== value)
+      );
+    },
+    [data, setData]
+  );
 
   return (
     <>
       <label htmlFor={property}>{property}</label>
       <input
-        type="radio"
+        type="checkbox"
         name={name}
         id={property}
         defaultValue={property}
-        checked={data === property}
+        checked={data.includes(property)}
         onChange={handleChange}
       />
     </>
   );
 }
 
-export default memo(InputRadio);
+export default memo(FormInputCheckbox);

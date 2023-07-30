@@ -1,6 +1,8 @@
 import { memo, useCallback } from "react";
+import { CustomFormError } from "../../../modules/common/Errors";
 
-const InputPassword = ({
+const FormInput = ({
+  type,
   label,
   name,
   data,
@@ -8,6 +10,11 @@ const InputPassword = ({
   placeholder,
   errorMessage,
 }) => {
+  if (type !== "text" && type !== "password" && type !== "email")
+    throw CustomFormError(
+      "허용되는 type 은 'text', 'password', 'email' 입니다."
+    );
+
   const handleChange = useCallback((event) => {
     event.stopPropagation();
     const { value } = event.target;
@@ -21,7 +28,7 @@ const InputPassword = ({
       </th>
       <td>
         <input
-          type="password"
+          type={type}
           name={name}
           id={name}
           value={data}
@@ -34,4 +41,4 @@ const InputPassword = ({
   );
 };
 
-export default memo(InputPassword);
+export default memo(FormInput);

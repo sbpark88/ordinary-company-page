@@ -1,12 +1,11 @@
 import React, { useCallback, useState } from "react";
 import Layout from "../components/layout/Layout";
 import $K from "../modules/data/Constants";
-import InputText from "../components/common/form/InputText";
-import InputPassword from "../components/common/form/InputPassword";
-import InputRadio from "../components/common/form/InputRadio";
-import InputCheckbox from "../components/common/form/InputCheckbox";
-import Select from "../components/common/form/Select";
-import Textarea from "../components/common/form/Textarea";
+import FormInput from "../components/common/form/FormInput";
+import FormInputRadio from "../components/common/form/FormInputRadio";
+import FormInputCheckbox from "../components/common/form/FormInputCheckbox";
+import FormSelect from "../components/common/form/FormSelect";
+import FormTextarea from "../components/common/form/FormTextarea";
 import { toast } from "react-toastify";
 import { throttle } from "../modules/utils/Performance";
 import {
@@ -149,7 +148,8 @@ function Members() {
           <legend hidden>회원등록 폼 양식</legend>
           <table>
             <tbody>
-              <InputText
+              <FormInput
+                type="text"
                 label="USER ID"
                 name="userId"
                 data={registerForm.userId}
@@ -157,7 +157,8 @@ function Members() {
                 placeholder="아이디를 입력하세요."
                 errorMessage={errorMessage.userId}
               />
-              <InputPassword
+              <FormInput
+                type="password"
                 label="PASSWORD"
                 name="password"
                 data={registerForm.password}
@@ -165,7 +166,8 @@ function Members() {
                 placeholder="비밀번호를 입력하세요."
                 errorMessage={errorMessage.password}
               />
-              <InputPassword
+              <FormInput
+                type="password"
                 label="RE-PASSWORD"
                 name="rePassword"
                 data={registerForm.rePassword}
@@ -173,7 +175,8 @@ function Members() {
                 placeholder="비밀번호를 다시 입력하세요."
                 errorMessage={errorMessage.rePassword}
               />
-              <InputText
+              <FormInput
+                type="text"
                 label="EMAIL"
                 name="email"
                 data={registerForm.email}
@@ -181,7 +184,7 @@ function Members() {
                 placeholder="이메일 주소를 입력하세요."
                 errorMessage={errorMessage.email}
               />
-              <InputRadio
+              <FormInputRadio
                 label="GENDER"
                 name="gender"
                 data={registerForm.gender}
@@ -189,7 +192,7 @@ function Members() {
                 properties={genderProperties}
                 errorMessage={errorMessage.gender}
               />
-              <InputCheckbox
+              <FormInputCheckbox
                 label="INTEREST"
                 data={registerForm.interest}
                 name="interest"
@@ -197,7 +200,7 @@ function Members() {
                 properties={interestProperties}
                 errorMessage={errorMessage.interest}
               />
-              <Select
+              <FormSelect
                 label="EDUCATION"
                 name="education"
                 data={registerForm.education}
@@ -205,7 +208,7 @@ function Members() {
                 propertiesWithName={educationPropertiesWithName}
                 errorMessage={errorMessage.education}
               />
-              <Textarea
+              <FormTextarea
                 label="comment"
                 name="comment"
                 data={registerForm.comment}

@@ -1,7 +1,8 @@
 import { memo, useCallback } from "react";
 
-const InputText = ({
+const FormInputPassword = ({
   label,
+  type,
   name,
   data,
   setData,
@@ -21,7 +22,7 @@ const InputText = ({
       </th>
       <td>
         <input
-          type="text"
+          type="password"
           name={name}
           id={name}
           value={data}
@@ -34,4 +35,4 @@ const InputText = ({
   );
 };
 
-export default memo(InputText);
+export default memo(FormInputPassword);
