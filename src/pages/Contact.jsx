@@ -7,7 +7,7 @@ import { KakaoMap } from "../modules/utils/KakaoMap";
 import { contactLocations } from "../modules/data/ContactLocations";
 import { applyMapToObject } from "../modules/utils/ObjectUtils";
 import EmailJs from "../components/common/EmailJs";
-import { toast } from "react-toastify";
+import { Toast } from "../modules/utils/UiHelper";
 
 function Contact(props) {
   const kakaoMapRef = useRef(null);
@@ -125,7 +125,5 @@ const kakaoMapApiBaseUrl =
   "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=";
 const kakaoMapApiScriptSrc = kakaoMapApiBaseUrl + kakaoMapApi;
 
-const sendEmailSuccess = () =>
-  toast.success("이메일을 전송했습니다.", $K.TOAST_POSITION);
-const sendEmailFail = () =>
-  toast.error("이메일 전송을 실패했습니다.", $K.TOAST_POSITION);
+const sendEmailSuccess = () => Toast.success("이메일을 전송했습니다.");
+const sendEmailFail = () => Toast.error("이메일 전송을 실패했습니다.");

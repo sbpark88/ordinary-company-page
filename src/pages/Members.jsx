@@ -6,7 +6,6 @@ import FormInputRadio from "../components/common/form/FormInputRadio";
 import FormInputCheckbox from "../components/common/form/FormInputCheckbox";
 import FormSelect from "../components/common/form/FormSelect";
 import FormTextarea from "../components/common/form/FormTextarea";
-import { toast } from "react-toastify";
 import { throttle } from "../modules/utils/Performance";
 import {
   testEmail,
@@ -16,6 +15,7 @@ import {
 } from "../modules/utils/Validators";
 import ValidatorMonad from "../modules/common/ValidatorMonad";
 import { stringLengthIsGreaterThanOrEqual } from "../modules/utils/StringUtils";
+import { Toast } from "../modules/utils/UiHelper";
 
 function Members() {
   const [registerForm, setRegisterForm] = useState(initialRegisterFormState);
@@ -278,9 +278,8 @@ const commentTextareaSize = {
 };
 
 const sendRegisterFormSuccess = () =>
-  toast.success("회원 등록을 축하드립니다!", $K.TOAST_POSITION);
-const sendRegisterFormFail = () =>
-  toast.error("회원 등록에 실패했습니다.", $K.TOAST_POSITION);
+  Toast.success("회원 등록을 축하드립니다!");
+const sendRegisterFormFail = () => Toast.error("회원 등록에 실패했습니다.");
 
 const collectErrorMessage = ($errorMessage, property, validatorMonad) => {
   if (validatorMonad.status) {

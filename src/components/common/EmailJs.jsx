@@ -3,8 +3,7 @@ import emailjs from "@emailjs/browser";
 import { emailjsApi } from "../../apiKey";
 import { pipe } from "../../modules/utils/FunctionalProgramming";
 import { stringIsEmpty } from "../../modules/utils/StringUtils";
-import { toast } from "react-toastify";
-import $K from "../../modules/data/Constants";
+import { Toast } from "../../modules/utils/UiHelper";
 import { throttle } from "../../modules/utils/Performance";
 import Input from "./Input";
 import Textarea from "./Textarea";
@@ -24,7 +23,7 @@ function EmailJs({ sendEmailSuccess, sendEmailFail }) {
       stringIsEmpty(formData.get("user_name")) ||
       stringIsEmpty(formData.get("message"))
     ) {
-      toast.info("이름과 메시지를 입력해주세요.", $K.TOAST_POSITION);
+      Toast.info("이름과 메시지를 입력해주세요.");
       return null;
     }
 

@@ -12,8 +12,8 @@ import {
   putCommunity,
 } from "../modules/api/Community";
 import { stringIsEmpty } from "../modules/utils/StringUtils";
-import { toast } from "react-toastify";
 import { throttle } from "../modules/utils/Performance";
+import { Toast } from "../modules/utils/UiHelper";
 
 function Community(props) {
   const [{ title, comment }, changeCommunity, resetCommunity] = useInputs(
@@ -30,7 +30,7 @@ function Community(props) {
   const createCommunity = useCallback(
     async (event) => {
       if (stringIsEmpty(title) || stringIsEmpty(comment)) {
-        toast.info("제목과 본문을 입력해주세요.", $K.TOAST_POSITION);
+        Toast.info("제목과 본문을 입력해주세요.");
         return null;
       }
       const requestDTO = new CommunityDTO({ title, comment });
