@@ -12,14 +12,6 @@ const OpenApiURL = {
   youtubePlaylist: " https://www.googleapis.com/youtube/v3/playlistItems",
 };
 
-const MembersURL = {
-  get: "/member",
-};
-
-const NewsURL = {
-  get: "/news",
-};
-
 const objToUrlParams = (object) => {
   return Object.entries(object)
     .filter(([key, value]) => validParams(value))
@@ -37,4 +29,4 @@ const objToUrlParams = (object) => {
   }
 };
 
-export { ViewUrl, OpenApiURL, MembersURL, NewsURL, objToUrlParams };
+export { ViewUrl, OpenApiURL, objToUrlParams };
