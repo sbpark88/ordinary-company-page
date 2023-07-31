@@ -20,6 +20,11 @@ const Constants = {
     ONLY_STRING_AND_NUMBER: /^[a-zA-Z0-9]+$/,
     E_MAIL: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
   },
+  COLOR: {
+    APPROVAL: "#44b506",
+    DELETE: "#e64f4f",
+    CANCEL: "#626262",
+  },
 };
 
 export default Constants;
