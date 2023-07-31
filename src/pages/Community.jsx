@@ -13,7 +13,7 @@ import {
 } from "../modules/api/Community";
 import { stringIsEmpty } from "../modules/utils/StringUtils";
 import { throttle } from "../modules/utils/Performance";
-import { Toast } from "../modules/utils/UiHelper";
+import { ConfirmDelete, Toast } from "../modules/utils/UiHelper";
 
 function Community(props) {
   const [{ title, comment }, changeCommunity, resetCommunity] = useInputs(
@@ -50,8 +50,7 @@ function Community(props) {
   });
 
   const removeCommunity = useCallback(async (id) => {
-    const response = await deleteCommunity(id);
-    await loadCommunity();
+    await ConfirmDelete(() => deleteCommunity(id), loadCommunity);
   });
 
   const DisplayCommunity = PostDisplayMode(setEditModeId, removeCommunity);
