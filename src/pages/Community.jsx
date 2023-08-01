@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import Layout from "../components/layout/Layout";
 import $K from "../modules/data/Constants";
 import { Input } from "../components/common/Input";
@@ -90,7 +90,11 @@ function Community(props) {
           community.id === editModeId ? (
             <EditCommunity key={community.id} {...community} />
           ) : (
-            <DisplayCommunity key={community.id} {...community} />
+            <DisplayCommunity
+              key={community.id}
+              {...community}
+              editModeId={editModeId}
+            />
           )
         )}
       </div>
@@ -106,18 +110,22 @@ const initialGuestBookState = {
 };
 
 const PostDisplayMode = (setEditModeId, removeCommunity) =>
-  memo(({ id, title, comment, editModeId }) => (
-    <>
-      <div className="txt">
-        <h2>{title}</h2>
-        <p>{comment}</p>
-      </div>
-      <nav className="btnSet">
-        <button onClick={() => setEditModeId(id)}>EDIT</button>
-        <button onClick={() => removeCommunity(id)}>DELETE</button>
-      </nav>
-    </>
-  ));
+  memo(({ id, title, comment, editModeId }) => {
+    return (
+      <article
+        className={editModeId && id !== editModeId ? "blocked-content" : ""}
+      >
+        <div className="txt">
+          <h2>{title}</h2>
+          <p>{comment}</p>
+        </div>
+        <nav className="btnSet">
+          <button onClick={() => setEditModeId(id)}>EDIT</button>
+          <button onClick={() => removeCommunity(id)}>DELETE</button>
+        </nav>
+      </article>
+    );
+  });
 
 const PostEditMode = (setEditModeId, updateCommunity) =>
   memo(({ id, title, comment, editModeId }) => {
@@ -127,10 +135,10 @@ const PostEditMode = (setEditModeId, updateCommunity) =>
     });
 
     return (
-      <>
+      <article>
         <div className="txt">
-          <input type="text" name="title" value={$title} onChange={onChange} />
-          <textarea name="comment" value={$comment} onChange={onChange} />
+          <Input type="text" name="title" data={$title} setData={onChange} />
+          <Textarea name="comment" data={$comment} setData={onChange} />
         </div>
         <nav className="btnSet">
           <button onClick={() => setEditModeId("")}>CANCEL</button>
@@ -146,6 +154,6 @@ const PostEditMode = (setEditModeId, updateCommunity) =>
             UPDATE
           </button>
         </nav>
-      </>
+      </article>
     );
   });
