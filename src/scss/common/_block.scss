@@ -7,7 +7,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black overlay */
     pointer-events: auto; /* Allow clicks on the overlay to block the content */
     touch-action: none;
   }

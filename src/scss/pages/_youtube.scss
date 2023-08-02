@@ -1,7 +1,7 @@
 .youtube {
   > .inner {
     article {
-      border-top: 1px solid #bbb;
+      border-top: $border-skinny-bbb;
       padding: 20px 0;
       display: flex;
       flex-wrap: wrap;

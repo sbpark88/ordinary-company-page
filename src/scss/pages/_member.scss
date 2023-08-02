@@ -1,18 +1,14 @@
 .member {
   > .inner {
     table {
-      $border-thick: 2px solid #333;
-      $border-skinny: 1px solid #bbb;
-      $cell-padding: 15px 30px;
-
       width: 100%;
-      border-top: $border-thick;
-      border-bottom: $border-thick;
+      border-top: $border-thick-333;
+      border-bottom: $border-thick-333;
 
 
       th {
         width: 20%;
-        border-bottom: $border-skinny;
+        border-bottom: $border-skinny-bbb;
         padding: $cell-padding;
         text-align: left;
         vertical-align: middle;
@@ -23,8 +19,8 @@
       }
 
       td {
-        border-bottom: $border-skinny;
-        border-left: $border-skinny;
+        border-bottom: $border-skinny-bbb;
+        border-left: $border-skinny-bbb;
         padding: $cell-padding;
         vertical-align: middle;
 
@@ -36,7 +32,7 @@
         }
 
         .writable {
-          border: 1px solid #bbb;
+          border: $border-skinny-bbb;
           background-color: #f3ffff;
           width: 40%;
           min-width: 200px;

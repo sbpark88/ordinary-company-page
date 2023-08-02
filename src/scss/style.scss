@@ -3,6 +3,13 @@
 $tablet: 1199px;
 $mobile: 759px;
 
+$border-thick-333: 2px solid #333;
+$border-thick-ddd: 1px solid #ddd;
+$border-skinny-ddd: 1px solid #ddd;
+$border-skinny-bbb: 1px solid #bbb;
+$border-skinny-aaa: 1px solid #aaa;
+$cell-padding: 15px 30px;
+
 @import 'common/reset';
 @import 'common/header';
 @import 'common/footer';
@@ -33,7 +40,6 @@ $gray: 200, 200, 200;
 $blur: .3;
 $bold: .8;
 
-
 @mixin colored-button($color: $gray) {
   $rgb-r: nth($color, 1);
   $rgb-g: nth($color, 2);
@@ -41,7 +47,7 @@ $bold: .8;
   $rgba-color: rgba($rgb-r, $rgb-g, $rgb-b, $blur);
   $hover-color: rgba($rgb-r, $rgb-g, $rgb-b, $bold);
 
-  border: 1px solid #aaa;
+  border: $border-skinny-aaa;
   border-radius: 5px;
   width: 150px;
   height: 30px;

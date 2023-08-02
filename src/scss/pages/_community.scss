@@ -1,5 +1,92 @@
 .community {
-  >.inner {
+  > .inner {
+    $box-padding: 50px;
+    $input-padding: 8px 10px;
 
+    .inputBox {
+      width: 100%;
+      border: $border-skinny-bbb;
+      padding: $box-padding;
+      margin-bottom: 50px;
+
+      input[type="text"],
+      textarea {
+        width: 50%;
+        padding: $input-padding;
+        border: $border-skinny-aaa;
+        margin-bottom: 10px;
+        background: #f4ffff;
+      }
+
+      .btnSet {
+        button {
+          width: 150px;
+          height: 30px;
+          display: inline-block;
+          border: none;
+          background: #555;
+          margin-right: 20px;
+          color: #fff;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .showBox {
+      width: 100%;
+      border: $border-skinny-bbb;
+      padding: $box-padding;
+
+      article {
+        background: #fff;
+        padding: 30px;
+        margin-bottom: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .txt {
+        width: 70%;
+        display: inline-flex;
+        flex-direction: column;
+        gap: 20px;
+
+        h2, p {
+          width: 100%;
+          padding: $input-padding;
+        }
+
+        input[type="text"],
+        textarea {
+          width: 100%;
+          padding: $input-padding;
+          border: 1px solid lightblue;
+          background: #f4ffff;
+          outline: none;
+        }
+      }
+
+      .btnSet {
+        min-width: 10%;
+        display: flex;
+        gap: 20px;
+
+        button {
+          border: none;
+          background: transparent;
+          cursor: pointer;
+
+          &:nth-of-type(1) {
+            color: orange;
+
+          }
+          &:nth-of-type(2) {
+            color: orangered;
+          }
+        }
+      }
+    }
   }
 }
