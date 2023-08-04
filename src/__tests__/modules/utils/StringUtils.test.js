@@ -15,6 +15,7 @@ import {
   stringOnlyContainsAlphabets,
   stringOnlyContainsAlphabetsAndNumbers,
   convertTimeIso8601toKoreanYearMonthDay,
+  objectToUrlParams,
 } from "../../../modules/utils/StringUtils";
 
 describe("dropLongString 함수의 테스트", () => {
@@ -247,5 +248,33 @@ describe("convertTimeIso8601toKoreanYearMonthDay 함수의 테스트", () => {
 
     const koreanYearMonthDay = convertTimeIso8601toKoreanYearMonthDay(iso8601);
     expect(koreanYearMonthDay).toBe(answer);
+  });
+});
+
+describe("objectToUrlParams 함수의 테스트", () => {
+  test("All params are valid.", () => {
+    const obj = {
+      name: "Amy",
+      age: 25,
+      favorite: "Music",
+      phone: "010-3500-8400",
+    };
+
+    const correctParams = "name=Amy&age=25&favorite=Music&phone=010-3500-8400";
+
+    expect(objectToUrlParams(obj)).toBe(correctParams);
+  });
+
+  test("Some params are valid, but others are not.", () => {
+    const obj = {
+      name: "Amy",
+      age: NaN,
+      favorite: "",
+      phone: "010-3500-8400",
+    };
+
+    const correctParams = "name=Amy&phone=010-3500-8400";
+
+    expect(objectToUrlParams(obj)).toBe(correctParams);
   });
 });
