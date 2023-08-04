@@ -46,3 +46,20 @@ export const stringLengthIsGreaterThanOrEqual = (str, length) =>
 // 2023-07-09T00:22:29Z 형식을 받아 2023.07.09 로 반환
 export const convertTimeIso8601toKoreanYearMonthDay = (iso8601) =>
   iso8601.split("T")[0].replaceAll("-", ".");
+
+export const objectToUrlParams = (obj) => {
+  return Object.entries(obj)
+    .filter(validParams)
+    .reduce((acc, [key, value]) => {
+      acc.append(key, String(value));
+      return acc;
+    }, new URLSearchParams())
+    .toString();
+
+  function validParams([key, value]) {
+    if ("number" === typeof value) return !isNaN(value);
+    else if (value === undefined || value === null || value instanceof Object)
+      return false;
+    else return String(value).trim().length > 0;
+  }
+};
