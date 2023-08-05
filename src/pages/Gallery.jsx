@@ -3,6 +3,7 @@ import Layout from "../components/layout/Layout";
 import $K from "../modules/data/Constants";
 import { getFlickrImagesOfInterest } from "../modules/api/Gallery";
 import Modal from "../components/layout/Modal";
+import Masonry from "react-masonry-component";
 
 function Gallery() {
   const [galleries, setGalleries] = useState();
@@ -23,14 +24,21 @@ function Gallery() {
         backgroundImageUrl={`${$K.PUBLIC_URL}/img/Gallery.jpg`}
       >
         <div className="frame">
-          {galleries?.map((gallery) => (
-            <GalleryCard
-              key={gallery.id}
-              {...gallery}
-              modal={modal}
-              setSelectedImageUrl={setSelectedImageUrl}
-            />
-          ))}
+          <Masonry
+            elementType={"section"}
+            options={{
+              transitionDuration: ".5s",
+            }}
+          >
+            {galleries?.map((gallery) => (
+              <GalleryCard
+                key={gallery.id}
+                {...gallery}
+                modal={modal}
+                setSelectedImageUrl={setSelectedImageUrl}
+              />
+            ))}
+          </Masonry>
         </div>
       </Layout>
       <Modal ref={modal}>
