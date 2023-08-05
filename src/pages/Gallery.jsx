@@ -33,7 +33,7 @@ function Gallery() {
             {galleries?.map((gallery) => (
               <GalleryCard
                 key={gallery.id}
-                {...gallery}
+                gallery={gallery}
                 modal={modal}
                 setSelectedImageUrl={setSelectedImageUrl}
               />
@@ -52,20 +52,19 @@ export default Gallery;
 
 const defaultBuddyIcon = "https://www.flickr.com/images/buddyicon.gif";
 
-const GalleryCard = memo((photo, modal, setSelectedImageUrl) => {
-  const { id, server, secret, title, farm, owner } = photo;
+const GalleryCard = ({ gallery, modal, setSelectedImageUrl }) => {
+  const { id, server, secret, title, farm, owner } = gallery;
 
   const middlePictureImageUrl = `https://live.staticflickr.com/${server}/${id}_${secret}_m.jpg`;
   const bigPictureImageUrl = `https://live.staticflickr.com/${server}/${id}_${secret}_b.jpg`;
   const profileImageUrl = `https://farm${farm}.staticflickr.com/${server}/buddyicons/${owner}.jpg`;
 
   const openModal = () => {
-    console.log("open modal");
+    setSelectedImageUrl(bigPictureImageUrl);
     modal.current.openModal();
   };
 
   const searchByUser = () => {
-    console.log("search by user");
     setSelectedImageUrl(bigPictureImageUrl);
   };
 
@@ -87,4 +86,4 @@ const GalleryCard = memo((photo, modal, setSelectedImageUrl) => {
       </div>
     </article>
   );
-});
+};
