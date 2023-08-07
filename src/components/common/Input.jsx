@@ -8,6 +8,7 @@ export const Input = ({
   data,
   setData,
   placeholder,
+  keyUp,
   sibling,
 }) => {
   if (type !== "text" && type !== "password" && type !== "email")
@@ -25,6 +26,7 @@ export const Input = ({
         value={data}
         placeholder={placeholder}
         onChange={setData}
+        onKeyUp={keyUp}
       />
       {sibling}
     </div>

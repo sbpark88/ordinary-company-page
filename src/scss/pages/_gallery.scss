@@ -1,5 +1,51 @@
 .gallery {
   > .inner {
+    nav {
+      $border-radius: 20px;
+      display: flex;
+      justify-content: space-between;
+
+      button {
+        font: normal 14px/1 "aria";
+        padding: 12px 20px;
+        border: 2px solid #777;
+        border-radius: $border-radius;
+        cursor: pointer;
+
+        &.on {
+          background-color: lawngreen;
+        }
+
+        &:not(:last-of-type) {
+          margin-right: 20px;
+        }
+      }
+
+      .searchBox {
+        display: flex;
+        align-items: center;
+
+        div {
+          height: 100%;
+
+          input[type="text"] {
+            height: 100%;
+            padding-left: 12px;
+            border: 2px solid #777;
+            border-top-left-radius: $border-radius;
+            border-bottom-left-radius: $border-radius;
+            background: #f4ffff;
+          }
+        }
+
+        button {
+          border-left: none;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+      }
+    }
+
     .frame {
       display: flow-root;
 

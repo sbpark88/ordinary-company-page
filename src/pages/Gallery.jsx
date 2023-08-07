@@ -1,21 +1,60 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Layout from "../components/layout/Layout";
 import $K from "../modules/data/Constants";
-import { getFlickrImagesOfInterest } from "../modules/api/Gallery";
+import {
+  getFlickrImagesOfInterest,
+  getFlickrImagesOfTags,
+  getFlickrImagesOfUser,
+} from "../modules/api/Gallery";
 import Modal from "../components/layout/Modal";
 import Masonry from "react-masonry-component";
+import { Input } from "../components/common/Input";
+import useInputs from "../hooks/UseInputs";
+import { stringIsEmpty } from "../modules/utils/StringUtils";
 
 function Gallery() {
   const [galleries, setGalleries] = useState();
   const [selectedImageUrl, setSelectedImageUrl] = useState();
   const modal = useRef(null);
+  const [{ searchText }, setSearch, resetSearch] = useInputs({
+    searchText: "",
+  });
+  const [galleryType, setGalleryType] = useState(GalleryType.interest);
 
-  const getInterest = async () => {
-    const response = await getFlickrImagesOfInterest();
-    setGalleries(response.data.photos.photo);
+  const getGalleries =
+    (getApi) =>
+    async (...args) => {
+      const response = await getApi(...args);
+      setGalleries(response.data.photos.photo);
+    };
+
+  const getImagesOfInterest = () => {
+    setGalleryType(GalleryType.interest);
+    getGalleries(getFlickrImagesOfInterest)();
+  };
+  const getImagesOfTags = () => {
+    if (stringIsEmpty(searchText)) return null;
+    setGalleryType(GalleryType.tags);
+    getGalleries(getFlickrImagesOfTags)(searchText);
+  };
+  const getImagesOfUser = (userId) => {
+    setGalleryType(
+      userId === myUserId ? GalleryType.myGallery : GalleryType.tags
+    );
+    getGalleries(getFlickrImagesOfUser)(userId);
   };
 
-  useEffect(getInterest, []);
+  const searchEnter = (event) => {
+    if (event.key === "Enter") {
+      getImagesOfTags();
+    }
+  };
+
+  useEffect(getImagesOfInterest, []);
+
+  useEffect(() => {
+    if (galleryType !== GalleryType.tags) resetSearch();
+  }, [galleryType]);
 
   return (
     <>
@@ -23,6 +62,38 @@ function Gallery() {
         name={"Gallery"}
         backgroundImageUrl={`${$K.PUBLIC_URL}/img/Gallery.jpg`}
       >
+        <nav>
+          <div className="galleryType">
+            <button
+              className={`gallery-mode ${
+                galleryType === GalleryType.interest ? "on" : ""
+              }`}
+              onClick={getImagesOfInterest}
+            >
+              Interest
+            </button>
+            <button
+              className={`gallery-mode ${
+                galleryType === GalleryType.myGallery ? "on" : ""
+              }`}
+              onClick={() => getImagesOfUser(myUserId)}
+            >
+              My Gallery
+            </button>
+          </div>
+          <div className="searchBox">
+            <Input
+              type="text"
+              name="searchText"
+              data={searchText}
+              setData={setSearch}
+              keyUp={searchEnter}
+              placeholder={"검색어를 입력하세요."}
+            />
+            <button onClick={getImagesOfTags}>검색</button>
+          </div>
+        </nav>
+
         <div className="frame">
           <Masonry
             elementType={"section"}
@@ -36,6 +107,7 @@ function Gallery() {
                 gallery={gallery}
                 modal={modal}
                 setSelectedImageUrl={setSelectedImageUrl}
+                getImagesOfUser={getImagesOfUser}
               />
             ))}
           </Masonry>
@@ -51,8 +123,14 @@ function Gallery() {
 export default Gallery;
 
 const defaultBuddyIcon = "https://www.flickr.com/images/buddyicon.gif";
+const myUserId = "186014471@N03";
 
-const GalleryCard = ({ gallery, modal, setSelectedImageUrl }) => {
+const GalleryCard = ({
+  gallery,
+  modal,
+  setSelectedImageUrl,
+  getImagesOfUser,
+}) => {
   const { id, server, secret, title, farm, owner } = gallery;
 
   const middlePictureImageUrl = `https://live.staticflickr.com/${server}/${id}_${secret}_m.jpg`;
@@ -62,10 +140,6 @@ const GalleryCard = ({ gallery, modal, setSelectedImageUrl }) => {
   const openModal = () => {
     setSelectedImageUrl(bigPictureImageUrl);
     modal.current.openModal();
-  };
-
-  const searchByUser = () => {
-    setSelectedImageUrl(bigPictureImageUrl);
   };
 
   return (
@@ -81,9 +155,15 @@ const GalleryCard = ({ gallery, modal, setSelectedImageUrl }) => {
             alt={owner}
             onError={(e) => e.target.setAttribute("src", defaultBuddyIcon)}
           />
-          <span onClick={searchByUser}>{owner}</span>
+          <span onClick={() => getImagesOfUser(owner)}>{owner}</span>
         </div>
       </div>
     </article>
   );
 };
+
+const GalleryType = Object.freeze({
+  interest: Symbol("interest"),
+  myGallery: Symbol("myGallery"),
+  tags: Symbol("tags"),
+});

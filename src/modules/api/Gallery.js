@@ -41,12 +41,12 @@ const defaultOptions = Object.freeze({
   nojsoncallback: 1,
 });
 
-const setOptions = ({ method, perPage = "50", tags, userId }) => {
+const setOptions = ({ method, per_page = "50", tags, user_id }) => {
   return {
     ...defaultOptions,
     method: method,
-    per_page: perPage,
+    per_page: per_page,
     tags: tags,
-    user_id: userId,
+    user_id: user_id,
   };
 };
