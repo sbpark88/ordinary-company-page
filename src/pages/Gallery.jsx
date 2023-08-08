@@ -14,6 +14,8 @@ import { stringIsEmpty } from "../modules/utils/StringUtils";
 import { Loading } from "../components/layout/Loading";
 
 function Gallery() {
+  const frameRef = useRef(null);
+  const loadImageCounter = useRef(0);
   const [loading, setLoading] = useState(false);
   const [noSearch, setNoSearch] = useState(false);
   const [galleries, setGalleries] = useState();
@@ -31,7 +33,25 @@ function Gallery() {
       const response = await getApi(...args);
       setNoSearch(response.data.photos.total === 0 ? true : false);
       setGalleries(response.data.photos.photo);
-      setLoading(false);
+      loadImageCounter.current = 0;
+      const imgs = frameRef.current.querySelectorAll("img");
+      imgs.forEach((img) => {
+        if (img.complete) {
+          loadImageCounter.current += 1;
+        } else {
+          const updateCounter = () => (loadImageCounter.current += 1);
+          img.addEventListener("load", () => {
+            updateCounter();
+            img.removeEventListener("load", updateCounter);
+            if (imgs.length === loadImageCounter.current) {
+              setLoading(false);
+            }
+          });
+        }
+        if (imgs.length === loadImageCounter.current) {
+          setLoading(false);
+        }
+      });
     };
 
   const getImagesOfInterest = () => {
@@ -103,7 +123,7 @@ function Gallery() {
           </div>
         </nav>
 
-        <div className="frame">
+        <div className="frame" ref={frameRef}>
           <Masonry
             elementType={"section"}
             options={{
@@ -125,20 +145,20 @@ function Gallery() {
               style={{
                 font: "normal 30px/1 'san-serif",
                 position: "absolute",
-                top: "50%",
+                top: "100px",
                 left: "50%",
-                transform: "translate(-50%, -50%)",
+                transform: "translateX(-50%)",
               }}
             >
               검색 결과가 없습니다.
             </div>
           )}
+          {loading && <Loading />}
         </div>
       </Layout>
       <Modal ref={modal}>
         <img src={selectedImageUrl} alt="large picture" />
       </Modal>
-      {loading && <Loading />}
     </>
   );
 }
