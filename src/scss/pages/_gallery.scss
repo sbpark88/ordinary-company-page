@@ -39,6 +39,7 @@
         }
 
         button {
+          height: 100%;
           border-left: none;
           border-top-left-radius: 0;
           border-bottom-left-radius: 0;
@@ -71,6 +72,30 @@
             color: #777;
             margin: 10px 0 30px 0;
           }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $tablet) {
+  .gallery {
+    > .inner {
+      .frame {
+        article {
+          width: 50%;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $mobile) {
+  .gallery {
+    > .inner {
+      .frame {
+        article {
+          width: 100%;
         }
       }
     }
