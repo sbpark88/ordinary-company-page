@@ -11,8 +11,11 @@ import Masonry from "react-masonry-component";
 import { Input } from "../components/common/Input";
 import useInputs from "../hooks/UseInputs";
 import { stringIsEmpty } from "../modules/utils/StringUtils";
+import { Loading } from "../components/layout/Loading";
 
 function Gallery() {
+  const [loading, setLoading] = useState(false);
+  const [noSearch, setNoSearch] = useState(false);
   const [galleries, setGalleries] = useState();
   const [selectedImageUrl, setSelectedImageUrl] = useState();
   const modal = useRef(null);
@@ -24,20 +27,26 @@ function Gallery() {
   const getGalleries =
     (getApi) =>
     async (...args) => {
+      setLoading(true);
       const response = await getApi(...args);
+      setNoSearch(response.data.photos.total === 0 ? true : false);
       setGalleries(response.data.photos.photo);
+      setLoading(false);
     };
 
   const getImagesOfInterest = () => {
+    if (loading) return null;
     setGalleryType(GalleryType.interest);
     getGalleries(getFlickrImagesOfInterest)();
   };
   const getImagesOfTags = () => {
     if (stringIsEmpty(searchText)) return null;
+    if (loading) return null;
     setGalleryType(GalleryType.tags);
     getGalleries(getFlickrImagesOfTags)(searchText);
   };
   const getImagesOfUser = (userId) => {
+    if (loading) return null;
     setGalleryType(
       userId === myUserId ? GalleryType.myGallery : GalleryType.tags
     );
@@ -111,11 +120,25 @@ function Gallery() {
               />
             ))}
           </Masonry>
+          {noSearch && (
+            <div
+              style={{
+                font: "normal 30px/1 'san-serif",
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              검색 결과가 없습니다.
+            </div>
+          )}
         </div>
       </Layout>
       <Modal ref={modal}>
         <img src={selectedImageUrl} alt="large picture" />
       </Modal>
+      {loading && <Loading />}
     </>
   );
 }
