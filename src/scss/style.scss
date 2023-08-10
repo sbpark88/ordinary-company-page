@@ -10,12 +10,13 @@ $border-skinny-bbb: 1px solid #bbb;
 $border-skinny-aaa: 1px solid #aaa;
 $cell-padding: 15px 30px;
 
-@import 'common/reset';
-@import 'common/header';
-@import 'common/footer';
-@import 'common/layout';
-@import 'common/modal';
-@import 'common/block';
+@import 'layout/reset';
+@import 'layout/header';
+@import 'layout/footer';
+@import 'layout/layout';
+@import 'layout/modal';
+@import 'layout/block';
+@import 'layout/mobile_header';
 
 @import 'main/visual';
 @import 'main/news';
