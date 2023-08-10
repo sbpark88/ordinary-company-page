@@ -1,42 +1,39 @@
-import React from "react";
+import React, { useCallback, useRef } from "react";
 import { ViewUrl } from "../../modules/data/URL";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import MobileHeader from "./mobile/MobileHeader";
+import Navigation from "../common/Navigation";
 
 function Header({ type }) {
-  return (
-    <header className={type}>
-      <h1>
-        <Link to={ViewUrl.root}>LOGO</Link>
-      </h1>
-      <ul id="gnb">
-        <Navigation path={ViewUrl?.department} name={"Department"} />
-        <Navigation path={ViewUrl?.community} name={"Community"} />
-        <Navigation path={ViewUrl?.gallery} name={"Gallery"} />
-        <Navigation path={ViewUrl?.youtube} name={"Youtube"} />
-        <Navigation path={ViewUrl?.contact} name={"Contact"} />
-        <Navigation path={ViewUrl?.members} name={"Members"} />
-      </ul>
-      <FontAwesomeIcon icon={faBars} />
-    </header>
+  const mobileHeader = useRef(null);
+
+  const mobileMenuOnClick = useCallback(
+    (event) => {
+      mobileHeader.current.toggleMenu();
+    },
+    [mobileHeader]
   );
-}
-
-function Navigation({ path, name }) {
-  const activeStyle = {
-    color: "hotpink",
-    fontWeight: "bold",
-  };
-
-  if (path === undefined || name === undefined) return null;
 
   return (
-    <li>
-      <NavLink to={path} activeStyle={activeStyle}>
-        {name}
-      </NavLink>
-    </li>
+    <>
+      <header className={type}>
+        <h1>
+          <Link to={ViewUrl.root}>Hogwrats</Link>
+        </h1>
+        <ul id="gnb">
+          <Navigation path={ViewUrl?.department} name={"Department"} />
+          <Navigation path={ViewUrl?.community} name={"Community"} />
+          <Navigation path={ViewUrl?.gallery} name={"Gallery"} />
+          <Navigation path={ViewUrl?.youtube} name={"Youtube"} />
+          <Navigation path={ViewUrl?.contact} name={"Contact"} />
+          <Navigation path={ViewUrl?.members} name={"Members"} />
+        </ul>
+        <FontAwesomeIcon icon={faBars} onClick={mobileMenuOnClick} />
+      </header>
+      <MobileHeader ref={mobileHeader} />
+    </>
   );
 }
 
