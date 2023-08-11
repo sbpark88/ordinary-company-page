@@ -1,6 +1,3 @@
-import axios from "axios";
-import $K from "../data/Constants";
+import { $get } from "./Axios";
 
-export const getMembers = async () => {
-  return await axios.get(`${$K.PUBLIC_URL}/member`);
-};
+export const getMembers = async () => await $get(`/member`);

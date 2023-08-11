@@ -1,6 +1,3 @@
-import axios from "axios";
-import $K from "../data/Constants";
+import { $get } from "./Axios";
 
-export const getNews = async () => {
-  return await axios.get(`${$K.PUBLIC_URL}/news`);
-};
+export const getNews = async () => await $get(`/news`);

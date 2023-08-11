@@ -12,6 +12,9 @@ export const Toast = {
   error: (content) => toast.error(content, $K.TOAST_POSITION),
 };
 
+export const toastDefaultApiError = () =>
+  Toast.error("데이터 조회에 실패하였습니다.");
+
 const Confirm =
   (
     { question, explanation, btnConfirm, btnCancel },

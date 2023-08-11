@@ -2,20 +2,21 @@ import React, { memo, useEffect, useState } from "react";
 import { btnScrollTargetClass } from "./Btns";
 import $K from "../../modules/data/Constants";
 import { getNews } from "../../modules/api/News";
+import { toastDefaultApiError } from "../../modules/utils/UiHelper";
 
 function News(props) {
   const [news, setNews] = useState([]);
 
   const getNewsList = async () => {
     const response = await getNews();
-    await setNews(response.data);
+    await setNews(response);
   };
 
   useEffect(() => {
     try {
       getNewsList();
     } catch (e) {
-      console.error(e);
+      toastDefaultApiError();
     }
   }, []);
 

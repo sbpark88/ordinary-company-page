@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 import Layout from "../components/layout/Layout";
 import $K from "../modules/data/Constants";
 import { getMembers } from "../modules/api/Members";
+import { toastDefaultApiError } from "../modules/utils/UiHelper";
 function Department() {
   const [members, setMembers] = useState([]);
 
   const getMemberList = async () => {
-    const response = await getMembers();
-    await setMembers(response.data.members);
+    try {
+      const response = await getMembers();
+      setMembers(response.members);
+    } catch (e) {
+      toastDefaultApiError();
+    }
   };
 
   useEffect(() => {
