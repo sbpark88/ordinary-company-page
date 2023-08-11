@@ -1,4 +1,3 @@
-import Header from "../layout/Header";
 import Visual from "./Visual";
 import News from "./News";
 import Pics from "./Pics";
@@ -9,7 +8,6 @@ import Btns from "./Btns";
 function FrontMain(props) {
   return (
     <main>
-      <Header type={"main"} />
       <Visual />
       <News />
       <Pics />

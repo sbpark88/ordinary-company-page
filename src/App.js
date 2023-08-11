@@ -19,10 +19,17 @@ function App() {
     <>
       {/* Switch 내부에 중복되는 라우트에 대한 switch 처리를 자동으로 해준다 */}
       <Switch>
-        <Route exact path={ViewUrl?.root} component={FrontMain} />
-        <Route path={ViewUrl?.root} render={() => <Header type="sub" />} />
+        {/* Header */}
+        <Route exact path={ViewUrl?.root}>
+          <Header type="main" />
+        </Route>
+        <Route path={ViewUrl?.root}>
+          <Header type="sub" />
+        </Route>
       </Switch>
 
+      {/* 각 pages */}
+      <Route exact path={ViewUrl?.root} component={FrontMain} />
       <Route path={ViewUrl?.department} component={Department} />
       <Route path={ViewUrl?.community} component={Community} />
       <Route path={ViewUrl?.gallery} component={Gallery} />
@@ -30,8 +37,10 @@ function App() {
       <Route path={ViewUrl?.contact} component={Contact} />
       <Route path={ViewUrl?.members} component={Members} />
 
+      {/* Footer */}
       <Footer />
 
+      {/* etc... */}
       <ToastContainer />
     </>
   );
