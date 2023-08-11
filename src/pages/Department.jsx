@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Layout from "../components/layout/Layout";
 import $K from "../modules/data/Constants";
 import { getMembers } from "../modules/api/Members";
-function Department(props) {
+function Department() {
   const [members, setMembers] = useState([]);
 
   const getMemberList = async () => {
@@ -34,7 +34,7 @@ function Department(props) {
   );
 }
 
-function MemberProfile({ member, index }) {
+function MemberProfile({ member }) {
   if (member === undefined) return null;
 
   return (

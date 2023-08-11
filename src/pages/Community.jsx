@@ -15,7 +15,7 @@ import { stringIsEmpty } from "../modules/utils/StringUtils";
 import { throttle } from "../modules/utils/Performance";
 import { ConfirmDelete, Toast } from "../modules/utils/UiHelper";
 
-function Community(props) {
+function Community() {
   const [{ title, comment }, changeCommunity, resetCommunity] = useInputs(
     initialGuestBookState
   );
@@ -27,38 +27,41 @@ function Community(props) {
     setCommunities(response.data);
   }, []);
 
-  const createCommunity = useCallback(
-    async (event) => {
-      if (stringIsEmpty(title) || stringIsEmpty(comment)) {
-        Toast.info("제목과 본문을 입력해주세요.");
-        return null;
-      }
-      const requestDTO = new CommunityDTO({ title, comment });
-      const response = await postCommunity(requestDTO);
-      resetCommunity();
-      await loadCommunity();
-    },
-    [title, comment, resetCommunity]
-  );
+  const createCommunity = useCallback(async () => {
+    if (stringIsEmpty(title) || stringIsEmpty(comment)) {
+      Toast.info("제목과 본문을 입력해주세요.");
+      return null;
+    }
+    const requestDTO = new CommunityDTO({ title, comment });
+    await postCommunity(requestDTO);
+    resetCommunity();
+    await loadCommunity();
+  }, [title, comment, resetCommunity, loadCommunity]);
   const throttledCreateCommunity = throttle(createCommunity, 3000);
 
-  const updateCommunity = useCallback(async ({ id, title, comment }) => {
-    const requestDTO = new CommunityDTO({ id, title, comment });
-    const response = await putCommunity(requestDTO);
-    setEditModeId(undefined);
-    await loadCommunity();
-  });
+  const updateCommunity = useCallback(
+    async ({ id, title, comment }) => {
+      const requestDTO = new CommunityDTO({ id, title, comment });
+      await putCommunity(requestDTO);
+      setEditModeId(undefined);
+      await loadCommunity();
+    },
+    [loadCommunity]
+  );
 
-  const removeCommunity = useCallback(async (id) => {
-    await ConfirmDelete(() => deleteCommunity(id), loadCommunity);
-  });
+  const removeCommunity = useCallback(
+    async (id) => {
+      await ConfirmDelete(() => deleteCommunity(id), loadCommunity);
+    },
+    [loadCommunity]
+  );
 
   const DisplayCommunity = PostDisplayMode(setEditModeId, removeCommunity);
   const EditCommunity = PostEditMode(setEditModeId, updateCommunity);
 
-  useEffect(async () => {
-    await loadCommunity();
-  }, []);
+  useEffect(() => {
+    loadCommunity();
+  }, [loadCommunity]);
 
   return (
     <Layout

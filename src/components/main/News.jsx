@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { btnScrollTargetClass } from "./Btns";
 import $K from "../../modules/data/Constants";
 import { getNews } from "../../modules/api/News";
@@ -44,4 +44,4 @@ const sectionStyle = {
   backgroundPosition: "top left",
 };
 
-export default News;
+export default memo(News);

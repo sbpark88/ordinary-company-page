@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import $K from "../../modules/data/Constants";
 import { btnScrollTargetClass } from "./Btns";
 
@@ -14,4 +14,4 @@ function Visual(props) {
   );
 }
 
-export default Visual;
+export default memo(Visual);

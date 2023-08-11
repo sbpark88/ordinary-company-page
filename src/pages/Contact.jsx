@@ -60,7 +60,7 @@ function Contact(props) {
             kakaoMap.current?.createLocation(loc.location),
             kakaoMap.current?.createMarkerImage({ ...loc })
           );
-        const marker = applyMapToObject(contactLocations)(applyAddMarker);
+        applyMapToObject(contactLocations)(applyAddMarker);
 
         // 3. 지도 타입 변환 컨트롤 추가
         kakaoMap.current?.addTypeControl(mapInstance.current);

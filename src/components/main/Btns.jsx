@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import { debounce } from "../../modules/utils/Performance";
 
 function Btns(props) {
@@ -35,9 +35,8 @@ function Btns(props) {
       /**
        * 화면에 보여지는 페이지를 추적해 페이징 버튼 활성화를 업데이트한다.
        * @param entries - Front main pages, e.g. "visual, news, ..."
-       * @param observer - Observer instance
        */
-      function trackCurrentPage(entries, observer) {
+      function trackCurrentPage(entries) {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const activePage = entry.target?.dataset?.pageName;
@@ -63,7 +62,7 @@ function Btns(props) {
         window.removeEventListener("scroll", scrollCallback);
       };
     },
-    [pages]
+    [pages, debouncedFindNodeAndScroll]
   );
 
   return (
@@ -80,7 +79,7 @@ function Btns(props) {
   );
 }
 
-export default Btns;
+export default memo(Btns);
 
 const btnScrollTargetClass = "btn-scroll";
 

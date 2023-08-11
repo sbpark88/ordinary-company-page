@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { btnScrollTargetClass } from "./Btns";
 
 function Banner(props) {
@@ -13,4 +13,4 @@ function Banner(props) {
   );
 }
 
-export default Banner;
+export default memo(Banner);

@@ -31,7 +31,7 @@ function Gallery() {
     async (...args) => {
       setLoading(true);
       const response = await getApi(...args);
-      setNoSearch(response.data.photos.total === 0 ? true : false);
+      setNoSearch(response.data.photos.total === 0);
       setGalleries(response.data.photos.photo);
       loadImageCounter.current = 0;
       const imgs = frameRef.current.querySelectorAll("img");
@@ -79,11 +79,11 @@ function Gallery() {
     }
   };
 
-  useEffect(getImagesOfInterest, []);
+  useEffect(getImagesOfInterest, []); // Do not add 'loading' into dependencies.
 
   useEffect(() => {
     if (galleryType !== GalleryType.tags) resetSearch();
-  }, [galleryType]);
+  }, [galleryType]); // Do not add 'resetSearch' into dependencies.
 
   return (
     <>

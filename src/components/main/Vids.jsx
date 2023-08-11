@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { btnScrollTargetClass } from "./Btns";
 
 function Vids(props) {
@@ -9,4 +9,4 @@ function Vids(props) {
   );
 }
 
-export default Vids;
+export default memo(Vids);
