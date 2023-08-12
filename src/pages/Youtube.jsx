@@ -8,6 +8,7 @@ import {
 } from "../modules/utils/StringUtils";
 import Modal from "../components/layout/Modal";
 import $K from "../modules/data/Constants";
+import { toastDefaultApiError } from "../modules/utils/UiHelper";
 
 const apiKey = (await import("../apiKey")).youtubeApiV3;
 
@@ -29,7 +30,7 @@ function Youtube(props) {
       const response = await axios.get(url);
       setVids(response.data.items);
     } catch (e) {
-      console.error(e);
+      toastDefaultApiError();
     }
   };
 

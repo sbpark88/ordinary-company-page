@@ -12,6 +12,7 @@ import { Input } from "../components/common/Input";
 import useInputs from "../hooks/UseInputs";
 import { stringIsEmpty } from "../modules/utils/StringUtils";
 import { Loading } from "../components/layout/Loading";
+import { toastDefaultApiError } from "../modules/utils/UiHelper";
 
 function Gallery() {
   const frameRef = useRef(null);
@@ -30,28 +31,32 @@ function Gallery() {
     (getApi) =>
     async (...args) => {
       setLoading(true);
-      const response = await getApi(...args);
-      setNoSearch(response.data.photos.total === 0);
-      setGalleries(response.data.photos.photo);
-      loadImageCounter.current = 0;
-      const imgs = frameRef.current.querySelectorAll("img");
-      imgs.forEach((img) => {
-        if (img.complete) {
-          loadImageCounter.current += 1;
-        } else {
-          const updateCounter = () => (loadImageCounter.current += 1);
-          img.addEventListener("load", () => {
-            updateCounter();
-            img.removeEventListener("load", updateCounter);
-            if (imgs.length === loadImageCounter.current) {
-              setLoading(false);
-            }
-          });
-        }
-        if (imgs.length === loadImageCounter.current) {
-          setLoading(false);
-        }
-      });
+      try {
+        const response = await getApi(...args);
+        setNoSearch(response.data.photos.total === 0);
+        setGalleries(response.data.photos.photo);
+        loadImageCounter.current = 0;
+        const imgs = frameRef.current?.querySelectorAll("img");
+        imgs?.forEach((img) => {
+          if (img.complete) {
+            loadImageCounter.current += 1;
+          } else {
+            const updateCounter = () => (loadImageCounter.current += 1);
+            img.addEventListener("load", () => {
+              updateCounter();
+              img.removeEventListener("load", updateCounter);
+              if (imgs.length === loadImageCounter.current) {
+                setLoading(false);
+              }
+            });
+          }
+          if (imgs.length === loadImageCounter.current) {
+            setLoading(false);
+          }
+        });
+      } catch (e) {
+        toastDefaultApiError();
+      }
     };
 
   const getImagesOfInterest = () => {

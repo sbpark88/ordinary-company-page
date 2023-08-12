@@ -13,7 +13,11 @@ import {
 } from "../modules/api/Community";
 import { stringIsEmpty } from "../modules/utils/StringUtils";
 import { throttle } from "../modules/utils/Performance";
-import { ConfirmDelete, Toast } from "../modules/utils/UiHelper";
+import {
+  ConfirmDelete,
+  Toast,
+  toastDefaultApiError,
+} from "../modules/utils/UiHelper";
 
 function Community() {
   const [{ title, comment }, changeCommunity, resetCommunity] = useInputs(
@@ -23,8 +27,12 @@ function Community() {
   const [editModeId, setEditModeId] = useState();
 
   const loadCommunity = useCallback(async () => {
-    const response = await getCommunity();
-    setCommunities(response.data);
+    try {
+      const response = await getCommunity();
+      setCommunities(response.data);
+    } catch (e) {
+      toastDefaultApiError();
+    }
   }, []);
 
   const createCommunity = useCallback(async () => {
