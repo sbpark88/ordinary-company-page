@@ -29,7 +29,7 @@ function Community() {
   const loadCommunity = useCallback(async () => {
     try {
       const response = await getCommunity();
-      setCommunities(response.data);
+      setCommunities(response);
     } catch (e) {
       toastDefaultApiError();
     }

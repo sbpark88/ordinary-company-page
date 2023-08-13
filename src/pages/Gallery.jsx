@@ -33,8 +33,8 @@ function Gallery() {
       setLoading(true);
       try {
         const response = await getApi(...args);
-        setNoSearch(response.data.photos.total === 0);
-        setGalleries(response.data.photos.photo);
+        setNoSearch(response.photos.total === 0);
+        setGalleries(response.photos.photo);
         loadImageCounter.current = 0;
         const imgs = frameRef.current?.querySelectorAll("img");
         imgs?.forEach((img) => {

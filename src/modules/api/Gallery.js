@@ -1,11 +1,11 @@
-import axios from "axios";
 import { flickrApi } from "../../apiKey";
 import { objectToUrlParams } from "../utils/StringUtils";
+import { $get } from "./Axios";
 
 const baseUrl = "https://www.flickr.com/services/rest/";
 const getFlickrImages = async (options) => {
   const params = objectToUrlParams(options);
-  return await axios.get(`${baseUrl}?${params}`);
+  return await $get(`${baseUrl}?${params}`);
 };
 
 export const getFlickrImagesOfInterest = async () => {
