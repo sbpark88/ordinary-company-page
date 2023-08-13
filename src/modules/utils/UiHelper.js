@@ -13,7 +13,7 @@ export const Toast = {
 };
 
 export const toastDefaultApiError = () =>
-  Toast.error("데이터 조회에 실패하였습니다.");
+  Toast.error("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
 
 const Confirm =
   (
@@ -38,12 +38,8 @@ const Confirm =
     });
 
     if (confirm.isConfirmed) {
-      const confirmClosureResponse = await confirmClosure();
-      if (
-        confirmClosureResponse === true ||
-        confirmClosureResponse.status === 200 ||
-        confirmClosureResponse.statusText === "OK"
-      ) {
+      try {
+        await confirmClosure();
         const feedback = await MySwal.fire({
           title: feedbackTitle,
           text: feedbackExplanation,
@@ -55,6 +51,8 @@ const Confirm =
         if (feedback.isConfirmed) {
           feedbackClosure();
         }
+      } catch (error) {
+        toastDefaultApiError();
       }
     }
   };
