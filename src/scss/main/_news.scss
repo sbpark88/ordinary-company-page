@@ -20,6 +20,8 @@ $background-colors: #568197, #879ab8, #cbac6f, #bc8ddb;
     padding: 10px;
     color: #222;
     font: 700 18px/1.2 'sans-serif';
+    border-radius: 15px;
+    box-shadow: 20px 15px 20px rgba(100,100,100, 0.8);
 
     @for $i from 1 through length($background-colors) {
       &:nth-of-type(#{$i}) {

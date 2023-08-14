@@ -5,9 +5,6 @@ export const handlers = [
   rest.get("/member", (req, res, context) =>
     res(context.status(200), context.json(members))
   ),
-  rest.get("/news", (req, res, context) =>
-    res(context.status(200), context.json(news))
-  ),
   rest.get("/community", (req, res, context) =>
     res(context.status(200), context.json(communities))
   ),

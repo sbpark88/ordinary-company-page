@@ -1,24 +1,27 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { btnScrollTargetClass } from "./Btns";
 import $K from "../../modules/data/Constants";
-import { getNews } from "../../modules/api/News";
 import { toastDefaultApiError } from "../../modules/utils/UiHelper";
+import { getCommunity } from "../../modules/api/Community";
 
 function News(props) {
   const [news, setNews] = useState([]);
 
-  const getNewsList = async () => {
-    const response = await getNews();
-    await setNews(response);
-  };
+  const getLastFourCommunity = useCallback(async () => {
+    const response = await getCommunity();
+    const lastFourCommunity = response
+      ?.toSorted((lhs, rhs) => (lhs.id > rhs.id ? -1 : 1))
+      .filter((community, index) => index < 4);
+    setNews(lastFourCommunity);
+  }, []);
 
   useEffect(() => {
     try {
-      getNewsList();
+      getLastFourCommunity();
     } catch (e) {
       toastDefaultApiError();
     }
-  }, []);
+  }, [getLastFourCommunity]);
 
   return (
     <section
@@ -34,8 +37,13 @@ function News(props) {
   );
 }
 
-function Article({ id, content }) {
-  return <article data-article-id={id}>{content}</article>;
+function Article({ id, title, comment }) {
+  return (
+    <article data-article-id={id}>
+      <p>{title}</p>
+      {comment}
+    </article>
+  );
 }
 
 const sectionStyle = {
