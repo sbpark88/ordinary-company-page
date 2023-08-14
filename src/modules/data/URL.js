@@ -10,6 +10,7 @@ const ViewUrl = {
 
 const OpenApiURL = {
   youtubePlaylist: " https://www.googleapis.com/youtube/v3/playlistItems",
+  flickrBase: "https://www.flickr.com/services/rest/",
 };
 
 const objToUrlParams = (object) => {

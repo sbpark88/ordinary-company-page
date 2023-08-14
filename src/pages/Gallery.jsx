@@ -5,7 +5,7 @@ import {
   getFlickrImagesOfInterest,
   getFlickrImagesOfTags,
   getFlickrImagesOfUser,
-} from "../modules/api/Gallery";
+} from "../modules/api/Flickr";
 import Modal from "../components/layout/Modal";
 import Masonry from "react-masonry-component";
 import { Input } from "../components/common/Input";

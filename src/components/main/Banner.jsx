@@ -7,9 +7,7 @@ function Banner() {
       id="banner"
       className={btnScrollTargetClass}
       data-page-name="banner"
-    >
-      <h1>Banner</h1>
-    </section>
+    ></section>
   );
 }
 

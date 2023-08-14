@@ -1,11 +1,11 @@
 import { flickrApi } from "../../apiKey";
 import { objectToUrlParams } from "../utils/StringUtils";
 import { $get } from "./Axios";
+import { OpenApiURL } from "../data/URL";
 
-const baseUrl = "https://www.flickr.com/services/rest/";
 const getFlickrImages = async (options) => {
   const params = objectToUrlParams(options);
-  return await $get(`${baseUrl}?${params}`);
+  return await $get(`${OpenApiURL.flickrBase}?${params}`);
 };
 
 export const getFlickrImagesOfInterest = async () => {

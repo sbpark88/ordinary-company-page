@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import Layout from "../components/layout/Layout";
-import axios from "axios";
-import { objToUrlParams, OpenApiURL } from "../modules/data/URL";
 import {
   convertTimeIso8601toKoreanYearMonthDay,
   dropLongString,
@@ -9,26 +7,17 @@ import {
 import Modal from "../components/layout/Modal";
 import $K from "../modules/data/Constants";
 import { toastDefaultApiError } from "../modules/utils/UiHelper";
+import YoutubeIframe from "../components/common/YoutubeIframe";
+import { getYoutube } from "../modules/api/Youtube";
 
-const apiKey = (await import("../apiKey")).youtubeApiV3;
-
-const options = {
-  part: "snippet",
-  key: apiKey,
-  playlistId: "PLRROPbx6xj0Gsti_vFYy_p-NUuXDMPCT7",
-  maxResults: 10,
-};
-
-function Youtube(props) {
+function Youtube() {
   const [vids, setVids] = useState([]);
   const [selectedId, setSelectedId] = useState("");
   const modal = useRef(null);
   const getYoutubeList = async () => {
-    const url = `${OpenApiURL.youtubePlaylist}?${objToUrlParams(options)}`;
-
     try {
-      const response = await axios.get(url);
-      setVids(response.data.items);
+      const response = await getYoutube();
+      setVids(response.items);
     } catch (e) {
       toastDefaultApiError();
     }
@@ -51,7 +40,9 @@ function Youtube(props) {
           />
         ))}
       </Layout>
-      <Modal ref={modal}>{selectedId && YoutubeIframe(vids, selectedId)}</Modal>
+      <Modal ref={modal}>
+        {selectedId && <YoutubeIframe vids={vids} selectedId={selectedId} />}
+      </Modal>
     </>
   );
 }
@@ -106,20 +97,3 @@ const generatePropsForVideoCard = (vid, modal, setSelectedId) => {
     setSelectedId: setSelectedId,
   };
 };
-
-function YoutubeIframe(vids, selectedId) {
-  if (vids === undefined || selectedId === undefined) return null;
-
-  const match = vids.filter((vid) => vid?.id === selectedId)[0];
-  if (match === null || match === undefined) return null;
-
-  const title = match.snippet.title;
-  const videoId = match.snippet.resourceId.videoId;
-
-  return (
-    <iframe
-      title={title}
-      src={`https://www.youtube.com/embed/${videoId}`}
-    ></iframe>
-  );
-}

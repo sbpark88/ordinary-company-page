@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useEffect, useState } from "react";
 import { btnScrollTargetClass } from "./Btns";
-import { getFlickrImagesOfUser } from "../../modules/api/Gallery";
+import { getFlickrImagesOfUser } from "../../modules/api/Flickr";
 import $K from "../../modules/data/Constants";
 import { toastDefaultApiError } from "../../modules/utils/UiHelper";
 import { randomSort } from "../../modules/utils/ArrayUtils";
@@ -29,7 +29,8 @@ function Pics() {
     } catch (e) {
       toastDefaultApiError();
     }
-  }, []);
+  }, [getRandomTwoGalleries]);
+
   return (
     <section id="pics" className={btnScrollTargetClass} data-page-name="pics">
       {pictureUrl?.map((url) => (
