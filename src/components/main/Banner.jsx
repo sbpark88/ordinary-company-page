@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { btnScrollTargetClass } from "./Btns";
 
-function Banner(props) {
+function Banner() {
   return (
     <section
       id="banner"

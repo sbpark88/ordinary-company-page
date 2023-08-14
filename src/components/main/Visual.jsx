@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import $K from "../../modules/data/Constants";
 import { btnScrollTargetClass } from "./Btns";
 
-function Visual(props) {
+function Visual() {
   return (
     <figure
       id="visual"

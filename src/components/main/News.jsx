@@ -4,7 +4,7 @@ import $K from "../../modules/data/Constants";
 import { toastDefaultApiError } from "../../modules/utils/UiHelper";
 import { getCommunity } from "../../modules/api/Community";
 
-function News(props) {
+function News() {
   const [news, setNews] = useState([]);
 
   const getLastFourCommunity = useCallback(async () => {

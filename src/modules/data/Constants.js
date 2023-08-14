@@ -25,6 +25,9 @@ const Constants = {
     DELETE: "#e64f4f",
     CANCEL: "#626262",
   },
+  FLICKR: {
+    MY_USER_ID: "186014471@N03",
+  },
 };
 
 export default Constants;

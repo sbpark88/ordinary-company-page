@@ -73,7 +73,7 @@ function Gallery() {
   const getImagesOfUser = (userId) => {
     if (loading) return null;
     setGalleryType(
-      userId === myUserId ? GalleryType.myGallery : GalleryType.tags
+      userId === $K.FLICKR.MY_USER_ID ? GalleryType.myGallery : GalleryType.tags
     );
     getGalleries(getFlickrImagesOfUser)(userId);
   };
@@ -110,7 +110,7 @@ function Gallery() {
               className={`gallery-mode ${
                 galleryType === GalleryType.myGallery ? "on" : ""
               }`}
-              onClick={() => getImagesOfUser(myUserId)}
+              onClick={() => getImagesOfUser($K.FLICKR.MY_USER_ID)}
             >
               My Gallery
             </button>
@@ -171,7 +171,6 @@ function Gallery() {
 export default Gallery;
 
 const defaultBuddyIcon = "https://www.flickr.com/images/buddyicon.gif";
-const myUserId = "186014471@N03";
 
 const GalleryCard = ({
   gallery,

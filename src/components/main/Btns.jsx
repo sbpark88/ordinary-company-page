@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useRef, useState } from "react";
 import { debounce } from "../../modules/utils/Performance";
 
-function Btns(props) {
+function Btns() {
   const btnRef = useRef(null);
   const [pages, setPages] = useState([]);
   const [activePage, setActivePage] = useState("");
