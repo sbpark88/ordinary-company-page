@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from "react";
 import Layout from "../components/layout/Layout";
 import $K from "../modules/data/Constants";
+import { useDispatch, useSelector } from "react-redux";
+import { useCallback, useEffect } from "react";
 import { getMembers } from "../modules/api/Members";
+import { setMembers } from "../redux/action";
 import { toastDefaultApiError } from "../modules/utils/UiHelper";
 function Department() {
-  const [members, setMembers] = useState([]);
+  const members = useSelector((store) => store.memberReducer.members);
+  const dispatch = useDispatch();
 
-  const getMemberList = async () => {
+  const getMemberList = useCallback(async () => {
     try {
-      const response = await getMembers();
-      setMembers(response.members);
+      const resposne = await getMembers();
+      dispatch(setMembers(resposne.members));
     } catch (e) {
       toastDefaultApiError();
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     try {
@@ -21,7 +24,7 @@ function Department() {
     } catch (e) {
       console.error(e);
     }
-  }, []);
+  }, [getMemberList]);
 
   return (
     <Layout

@@ -4,6 +4,8 @@ import App from "./App";
 import { HashRouter } from "react-router-dom";
 import { DevSupport } from "@react-buddy/ide-toolbox";
 import { ComponentPreviews, useInitial } from "./dev";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 if (process.env.NODE_ENV === "development") {
   const { worker } = require("./mocks/browser");
@@ -21,7 +23,9 @@ ReactDOM.render(
         ComponentPreviews={ComponentPreviews}
         useInitialHook={useInitial}
       >
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </DevSupport>
     </HashRouter>
   </StrictMode>,
